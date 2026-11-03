@@ -68,10 +68,10 @@ import { nav, focus, intro, news, lectures, links } from '../../try/content.js';
     <section class="about">
       <HeroPhotos />
       <div><p set:html={intro[0]} /><p set:html={focus} /></div>
-      <div><p set:html={intro[1]} /><p set:html={intro[2]} /></div>
+      <div><p set:html={intro[1]} /><p set:html={intro[2]} /><a class="more" href="/aboutlucnijs">More about me →</a></div>
     </section>
     <section class="panels">
-      <div class="panel news"><h2>News</h2>{news.map((n) => <p set:html={n} />)}<a class="more" href="/aboutlucnijs">More about me →</a></div>
+      <div class="panel news"><h2>News</h2>{news.map((n) => <p set:html={n} />)}</div>
       <div class="panel">
         <h2>Invited lectures</h2>
         <ol class="talks">{lectures.map(([d, t, w, x]) => <li><time>{d}</time><span>{t}<small>{w}</small>{x && <small set:html={x} />}</span></li>)}</ol>
