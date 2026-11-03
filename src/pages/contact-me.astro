@@ -17,14 +17,39 @@ import Base from '../layouts/Base.astro';
 <p class="fs-18 c-27223e">Esch-sur-Alzette, Luxembourg</p></div></div>
 </div>
 <div class="col" style="width:55.34%;margin-left:5.83%">
-<div class="b" style="margin-top:6px"><form class="contact-form" onsubmit="return false">
+<div class="b" style="margin-top:6px"><form class="contact-form" data-contact>
 <input type="text" name="name" placeholder="Name*" aria-label="Name*" required>
 <input type="email" name="email" placeholder="Email address*" aria-label="Email address*" required>
 <input type="text" name="subject" placeholder="Subject" aria-label="Subject">
-<textarea name="message" placeholder="Bericht" aria-label="Bericht" rows="6"></textarea>
-<button type="submit" disabled title="Form not connected yet">Send</button>
+<textarea name="message" placeholder="Message*" aria-label="Message*" rows="6" required></textarea>
+<button type="submit">Send</button>
+<p class="form-note" data-note hidden></p>
 </form></div>
 </div>
 </div>
 </div></section>
+<script>
+  const TO = 'luc.nijs@uni.lu';
+  const form = document.querySelector<HTMLFormElement>('[data-contact]');
+  const note = document.querySelector<HTMLElement>('[data-note]');
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const topic = String(data.get('subject') || '').trim();
+    const body = [
+      `Name: ${data.get('name')}`,
+      `Email: ${data.get('email')}`,
+      ...(topic ? [`Subject: ${topic}`] : []),
+      '',
+      String(data.get('message')),
+    ].join('\n');
+    const url = `mailto:${TO}?subject=${encodeURIComponent('via website')}&body=${encodeURIComponent(body)}`;
+    if (note) {
+      note.hidden = false;
+      note.innerHTML = 'Your email program should open with this message, ready to send. If it doesn\u2019t, <a data-link>open it here</a> or write to ' + TO + '.';
+      note.querySelector('a')?.setAttribute('href', url);
+    }
+    window.location.href = url;
+  });
+</script>
 </Base>
