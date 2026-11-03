@@ -10,7 +10,7 @@
 .home .about { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; padding-block: 28px 64px; color: var(--copy); font-size: 16px; }
 .home .about p { margin: 0; }
 .home .about p + p { margin-top: 14px; }
-.home .more { display: inline-block; margin-top: 16px; color: var(--accent); font-weight: 500; font-size: 15px; text-decoration: none; }
+.home .more { display: inline-block; margin-top: 16px; color: var(--link); font-weight: 500; font-size: 15px; text-decoration: none; }
 .home .panels { display: grid; grid-template-columns: 1fr 1.8fr; gap: 16px; }
 .home .panel { padding: 34px 36px; background: var(--panel); border-radius: 4px; }
 .home h2 { margin: 0 0 22px; font: 400 26px var(--head); color: var(--text); }
@@ -26,3 +26,4 @@
   .home .panel { padding: 26px 22px; }
   .home .talks li { grid-template-columns: 1fr; gap: 2px; }
 }
+.home .more:hover { color: var(--link-hover); }

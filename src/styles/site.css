@@ -9,23 +9,26 @@
   --soft: #a3a2a8;
   --line: #2e2e35;
   --accent: #8fb6dc;
+  --link: #a9c28c;
+  --link-hover: #6f9fd0;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; background: var(--bg); color: var(--copy); font: 400 16px/1.6 var(--body); }
 body > main { flex: 1; }
 img, video, iframe { display: block; max-width: 100%; }
-a { color: inherit; text-underline-offset: 3px; }
-a:hover { color: var(--accent); }
-a.nou { text-decoration: none; }
+a { color: var(--link); text-decoration: none; font-weight: 500; }
+a:hover { color: var(--link-hover); }
 strong { font-weight: 600; color: #fff; }
+a strong { color: inherit; }
 
 /* Header and footer */
 .wrap { width: 100%; max-width: 1200px; margin: 0 auto; padding-inline: 36px; }
 header.top { display: flex; flex-wrap: wrap; gap: 8px 32px; align-items: baseline; padding-block: 26px; }
-.name { font: 400 22px var(--head); color: var(--text); text-decoration: none; }
+.name { font: 400 22px var(--head); color: var(--text); }
 .menu { display: flex; flex-wrap: wrap; gap: 4px 20px; margin-left: auto; font-size: 14px; color: var(--text); }
-.menu a { text-decoration: none; }
+.menu a { color: inherit; font-weight: 400; }
+.menu a:hover { color: var(--accent); }
 .menu a.on { color: var(--accent); }
 footer.wrap { display: flex; flex-wrap: wrap; gap: 8px 28px; justify-content: space-between; margin-top: 72px; padding-block: 26px 70px; border-top: 1px solid var(--line); color: var(--soft); font-size: 14px; }
 
@@ -51,13 +54,14 @@ hr { margin: 0; border: 0; border-top: 2px solid var(--accent); }
 .audio span { color: var(--soft); }
 .audio audio { width: 100%; }
 .anchor-menu { margin: 0; padding: 0; list-style: none; text-align: right; font-size: 14px; }
-.anchor-menu a { text-decoration: none; }
+.anchor-menu a { color: inherit; font-weight: 400; }
+.anchor-menu a:hover { color: var(--accent); }
 .contact-form { display: grid; gap: 8px; }
 .contact-form input, .contact-form textarea { width: 100%; padding: 9px 12px; background: var(--panel); border: 1px solid var(--line); border-radius: 4px; color: var(--text); font: inherit; }
 .contact-form input::placeholder, .contact-form textarea::placeholder { color: var(--soft); }
 .contact-form button { justify-self: end; padding: 7px 24px; border: 1px solid var(--accent); border-radius: 99px; background: none; color: var(--accent); font: inherit; }
 .form-note { margin: 0; color: var(--soft); font-size: 14px; }
-.form-note a { color: var(--accent); }
+.form-note a { color: var(--link); }
 
 .link-row { flex-wrap: wrap; gap: 10px 28px; align-items: center; width: 100% !important; }
 .link-row > .col { width: auto !important; margin-left: 0 !important; }
