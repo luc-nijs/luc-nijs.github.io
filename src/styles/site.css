@@ -78,7 +78,7 @@ hr { margin: 0; border: 0; border-top-style: solid; }
 .card > .card-action { align-self: center; margin-top: auto; padding-top: 10px; }
 .card .btn { min-width: 100px; }
 .card > .card-note { align-self: stretch; }
-.cols-3 .card > .b:first-child, .card:has(> .card-center) > .b:first-child { min-height: 44px; }
+.cols-3 .card > .b:first-child, .card:has(> .card-center) > .b:first-child { min-height: 48px; }
 .card .row .rt a { white-space: nowrap; }
 @media (max-width: 760px) {
   .card-grid.cols-2, .card-grid.cols-3 { grid-template-columns: minmax(0, 1fr); }
