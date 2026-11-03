@@ -2,7 +2,8 @@
 import Base from '../layouts/Base.astro';
 import HeroPhotos from '../components/HeroPhotos.astro';
 import '../styles/home.css';
-import { focus, intro, news, lectures } from '../data/home.js';
+import UpcomingLectures from '../components/UpcomingLectures.astro';
+import { focus, intro, news } from '../data/home.js';
 ---
 <Base title="Luc Nijs ⎸ Music Education Research" description="This is the homepage of the personal website of Luc Nijs, Associate Professor @ University of Luxembourg. This site is about music educational research and practice." slug="">
 <div class="home">
@@ -21,8 +22,8 @@ import { focus, intro, news, lectures } from '../data/home.js';
     <section class="panels">
       <div class="panel news"><h2>News</h2>{news.map((n) => <p set:html={n} />)}</div>
       <div class="panel">
-        <h2>Invited lectures</h2>
-        <ol class="talks">{lectures.map(([d, t, w, x]) => <li><time>{d}</time><span>{t}<small>{w}</small>{x && <small set:html={x} />}</span></li>)}</ol>
+        <h2>Upcoming lectures</h2>
+        <UpcomingLectures />
         <a class="more" href="/agenda">See all lectures and workshops →</a>
       </div>
     </section>

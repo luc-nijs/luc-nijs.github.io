@@ -1,0 +1,96 @@
+---
+const AGENDA_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTct42zJNIr0IyJi4Ug8Q5WyHy1gCLrDFUpGg4LsU-Nn4zlNundPmaa40S4Rtfm4YoJj5ox4CZKSDE1/pub?gid=506081650&single=true&output=csv';
+---
+<ol class="talks" data-upcoming data-csv={AGENDA_CSV}>
+  <li class="talks-note">Loading upcoming lectures…</li>
+</ol>
+
+<script>
+  const MAX_SHOWN = 6;
+  const list = document.querySelector<HTMLOListElement>('[data-upcoming]');
+
+  function parseCSV(text: string) {
+    const rows: string[][] = [];
+    let row: string[] = [], field = '', inQuotes = false;
+    for (let i = 0; i < text.length; i++) {
+      const c = text[i];
+      if (inQuotes) {
+        if (c === '"') {
+          if (text[i + 1] === '"') { field += '"'; i++; } else { inQuotes = false; }
+        } else { field += c; }
+      } else if (c === '"') { inQuotes = true;
+      } else if (c === ',') { row.push(field); field = '';
+      } else if (c === '\n') { row.push(field); rows.push(row); row = []; field = '';
+      } else if (c !== '\r') { field += c; }
+    }
+    if (field !== '' || row.length) { row.push(field); rows.push(row); }
+    return rows;
+  }
+
+  // Dates may be YYYY-MM-DD or, from the Google Form, DD/MM/YYYY. Rows with only a year are skipped.
+  function isoDate(value: string) {
+    const dm = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec(value);
+    if (dm) return `${dm[3]}-${dm[2].padStart(2, '0')}-${dm[1].padStart(2, '0')}`;
+    return /^\d{4}-\d{2}-\d{2}$/.test(value) ? value : '';
+  }
+
+  function today() {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  }
+
+  function upcoming(text: string) {
+    const [header, ...rows] = parseCSV(text);
+    const col = (name: string) => header.findIndex((h) => h.trim().toLowerCase() === name);
+    const at = { date: col('date'), title: col('title'), occasion: col('occasion'), place: col('location'), country: col('country'), online: col('online') };
+    if (at.date < 0 || at.title < 0) throw new Error('unexpected columns');
+    const cell = (r: string[], i: number) => (i < 0 ? '' : (r[i] ?? '').replace(/\s+/g, ' ').trim());
+    return rows
+      .map((r) => ({
+        date: isoDate(cell(r, at.date)),
+        title: cell(r, at.title),
+        occasion: cell(r, at.occasion),
+        where: [cell(r, at.place), cell(r, at.country)].filter(Boolean).join(', '),
+        online: /^(y|yes|true|1|x|online|ja|oui|si|wel)$/i.test(cell(r, at.online)),
+      }))
+      .filter((l) => l.date && l.title && l.date >= today())
+      .sort((a, b) => a.date.localeCompare(b.date))
+      .slice(0, MAX_SHOWN);
+  }
+
+  function note(text: string) {
+    const li = document.createElement('li');
+    li.className = 'talks-note';
+    li.textContent = text;
+    list!.replaceChildren(li);
+  }
+
+  function small(text: string) {
+    const el = document.createElement('small');
+    el.textContent = text;
+    return el;
+  }
+
+  if (list) {
+    fetch(`${list.dataset.csv}&v=${Math.floor(Date.now() / 60000)}`, { cache: 'no-cache' })
+      .then((res) => { if (!res.ok) throw new Error(String(res.status)); return res.text(); })
+      .then((text) => {
+        const items = upcoming(text);
+        if (!items.length) return note('No upcoming lectures are scheduled at the moment.');
+        list.replaceChildren(...items.map((l) => {
+          const li = document.createElement('li');
+          const time = document.createElement('time');
+          time.dateTime = l.date;
+          time.textContent = l.date.replace(/-/g, '.');
+          const body = document.createElement('span');
+          body.append(l.title);
+          if (l.occasion) body.append(small(l.occasion));
+          const where = [l.where, l.online ? 'online' : ''].filter(Boolean).join(' · ');
+          if (where) body.append(small(where));
+          li.append(time, body);
+          return li;
+        }));
+      })
+      .catch(() => note('The list of upcoming lectures could not be loaded just now.'));
+  }
+</script>

@@ -17,6 +17,7 @@
 .home .news p { margin: 0 0 18px; font-size: 16px; line-height: 1.5; color: var(--copy); }
 .home ol.talks { margin: 0; padding: 0; list-style: none; }
 .home .talks li { display: grid; grid-template-columns: 112px 1fr; gap: 20px; padding: 12px 0; border-top: 1px solid var(--line); color: var(--text); font-size: 15.5px; line-height: 1.4; }
+.home .talks li.talks-note { display: block; color: var(--soft); }
 .home .talks time { color: var(--accent); font-size: 13px; line-height: 1.7; font-variant-numeric: tabular-nums; }
 .home .talks small { display: block; margin-top: 2px; color: var(--soft); font-size: 13px; }
 @media (max-width: 860px) {
