@@ -10,12 +10,12 @@
   html, body { height: 100%; margin: 0; padding: 0; }
 
   #pub-app {
-    --pb-ink:    #1d2230;
-    --pb-muted:  #5d6679;
-    --pb-line:   #d8dce5;
-    --pb-bg:     #ffffff;
-    --pb-accent: #2f6f9f;
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --pb-ink:    #d2d1cc;
+    --pb-muted:  #a3a2a8;
+    --pb-line:   #2e2e35;
+    --pb-bg:     #131316;
+    --pb-accent: #8fb6dc;
+    font-family: Inter, sans-serif;
     color: var(--pb-ink);
     height: 100%; min-height: 320px;
     display: flex; flex-direction: column;
@@ -54,7 +54,7 @@
     font-size: .87rem; line-height: 1.5;
     border-left: 3px solid transparent;
   }
-  #pub-app .pb-item:hover { background: #f3f6fa; border-left-color: var(--pb-accent); }
+  #pub-app .pb-item:hover { background: #1c1c21; border-left-color: var(--pb-accent); }
   #pub-app .pb-item .pb-t { font-weight: 500; }
   #pub-app .pb-item .pb-v { color: var(--pb-muted); font-style: italic; }
   #pub-app .pb-item a { color: var(--pb-accent); text-decoration: none; }
@@ -63,16 +63,16 @@
   #pub-app .pb-badge {
     display: inline-block; font-size: .68rem; text-transform: uppercase;
     letter-spacing: .03em; padding: .05rem .3rem; border-radius: 3px;
-    background: #eef2f7; color: var(--pb-muted); border: 1px solid var(--pb-line);
+    background: #1c1c21; color: var(--pb-muted); border: 1px solid var(--pb-line);
     vertical-align: 1px; margin-left: .25rem; white-space: nowrap;
   }
 
   #pub-app .pb-status {
     flex: 0 0 auto; padding: .3rem .2rem 0; font-size: .78rem; color: var(--pb-muted);
   }
-  #pub-app .pb-status.pb-error { color: #9c2b2b; }
+  #pub-app .pb-status.pb-error { color: #e0a0a0; }
 </style>
-</head>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet"><style>:root{color-scheme:dark}html,body{background:#131316}</style></head>
 <body>
 
 <div id="pub-app">

@@ -15,12 +15,12 @@
   html, body { height: 100%; margin: 0; padding: 0; }
 
   #lecture-map-app {
-    --lm-ink:    #1d2230;
-    --lm-muted:  #5d6679;
-    --lm-line:   #d8dce5;
-    --lm-bg:     #ffffff;
-    --lm-accent: #2f6f9f;
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --lm-ink:    #d2d1cc;
+    --lm-muted:  #a3a2a8;
+    --lm-line:   #2e2e35;
+    --lm-bg:     #131316;
+    --lm-accent: #8fb6dc;
+    font-family: Inter, sans-serif;
     color: var(--lm-ink);
     height: 100%; min-height: 320px;
     display: flex; flex-direction: column;
@@ -49,7 +49,7 @@
   #lecture-map {
     flex: 1 1 58%; min-width: 0; min-height: 180px;
     border: 1px solid var(--lm-line); border-radius: 8px;
-    background: #aad3df;
+    background: #1c1c21;
   }
   #lm-list-pane {
     flex: 1 1 42%; min-width: 0; min-height: 0;
@@ -76,8 +76,8 @@
     font-size: .85rem; line-height: 1.4;
     border-left: 3px solid transparent;
   }
-  #lecture-map-app .lm-item:hover   { background: #f3f6fa; }
-  #lecture-map-app .lm-item.lm-on   { background: #eaf1f8; border-left-color: var(--lm-accent); }
+  #lecture-map-app .lm-item:hover   { background: #1c1c21; }
+  #lecture-map-app .lm-item.lm-on   { background: #232329; border-left-color: var(--lm-accent); }
   #lecture-map-app .lm-item .lm-t   { font-weight: 500; }
   #lecture-map-app .lm-item .lm-m   { color: var(--lm-muted); font-size: .78rem; }
   #lecture-map-app .lm-item a       { color: var(--lm-accent); }
@@ -93,7 +93,7 @@
   #lecture-map-app .lm-status {
     flex: 0 0 auto; padding: .3rem .2rem 0; font-size: .78rem; color: var(--lm-muted);
   }
-  #lecture-map-app .lm-status.lm-error { color: #9c2b2b; }
+  #lecture-map-app .lm-status.lm-error { color: #e0a0a0; }
 
   /* popup + legend */
   #lecture-map-app .lm-pop { font-size: .85rem; line-height: 1.45; max-width: 16rem; }
@@ -102,7 +102,7 @@
   #lecture-map-app .lm-pop ul { margin: .35rem 0 0; padding-left: 1.05rem; }
   #lecture-map-app .lm-pop li { margin-bottom: .3rem; }
   #lecture-map-app .lm-legend {
-    background: rgba(255,255,255,.92); padding: .4rem .55rem;
+    background: rgba(28,28,33,.92); color: #d2d1cc; padding: .4rem .55rem;
     border-radius: 6px; font-size: .75rem; line-height: 1.55;
     box-shadow: 0 1px 4px rgba(0,0,0,.2);
   }
@@ -111,7 +111,7 @@
     margin-right: .35rem; vertical-align: middle; border: 1px solid rgba(0,0,0,.35);
   }
 </style>
-</head>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet"><style>:root{color-scheme:dark}html,body{background:#131316}.leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) grayscale(.55) brightness(.8) contrast(.9)}.leaflet-bar a.leaflet-disabled{background:#1c1c21;color:#5a5a62}.leaflet-popup-content-wrapper,.leaflet-popup-tip{background:#1c1c21;color:#d2d1cc}.leaflet-bar a,.leaflet-bar a:hover{background:#1c1c21;color:#d2d1cc;border-color:#2e2e35}.leaflet-container .leaflet-control-attribution{background:rgba(19,19,22,.8);color:#a3a2a8}.leaflet-container .leaflet-control-attribution a{color:#8fb6dc}.marker-cluster,.marker-cluster div{background:rgba(143,182,220,.55);color:#131316}</style></head>
 <body>
 
 <div id="lecture-map-app">

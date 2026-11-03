@@ -1,0 +1,27 @@
+.home .hero { padding-block: 34px 8px; }
+.home .about .fade { height: 100%; min-height: 400px; opacity: .4; background: none;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 18%, #000 82%, transparent), linear-gradient(to bottom, transparent, #000 12%, #000 76%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent, #000 18%, #000 82%, transparent), linear-gradient(to bottom, transparent, #000 12%, #000 76%, transparent);
+  mask-composite: intersect; }
+.home .about .fade figcaption { display: none; }
+.home .kicker { margin: 18px 0 0; color: var(--accent); font-size: 13px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; }
+.home h1 { margin: 0; font: 300 clamp(52px, 7.2vw, 92px)/1 var(--head); letter-spacing: -.025em; color: var(--text); }
+.home .about { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; padding-block: 28px 64px; color: var(--copy); font-size: 16px; }
+.home .about p { margin: 0; }
+.home .about p + p { margin-top: 14px; }
+.home .more { display: inline-block; margin-top: 16px; color: var(--accent); font-weight: 500; font-size: 15px; text-decoration: none; }
+.home .panels { display: grid; grid-template-columns: 1fr 1.8fr; gap: 16px; }
+.home .panel { padding: 34px 36px; background: var(--panel); border-radius: 4px; }
+.home h2 { margin: 0 0 22px; font: 400 26px var(--head); color: var(--text); }
+.home .news p { margin: 0 0 18px; font-size: 16px; line-height: 1.5; color: var(--copy); }
+.home ol.talks { margin: 0; padding: 0; list-style: none; }
+.home .talks li { display: grid; grid-template-columns: 112px 1fr; gap: 20px; padding: 12px 0; border-top: 1px solid var(--line); color: var(--text); font-size: 15.5px; line-height: 1.4; }
+.home .talks time { color: var(--accent); font-size: 13px; line-height: 1.7; font-variant-numeric: tabular-nums; }
+.home .talks small { display: block; margin-top: 2px; color: var(--soft); font-size: 13px; }
+@media (max-width: 860px) {
+  .home .about .fade { height: 320px; min-height: 0; }
+  .home .about, .home .panels { grid-template-columns: 1fr; gap: 20px; }
+  .home .panel { padding: 26px 22px; }
+  .home .talks li { grid-template-columns: 1fr; gap: 2px; }
+}
