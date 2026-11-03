@@ -1,6 +1,6 @@
 ---
 const { at } = Astro.props;
-const opts = [['A', '/try/a'], ['B', '/try/b'], ['C', '/try/c'], ['D', '/try/d'], ['Current', '/']];
+const opts = [['A', '/try/a'], ['B', '/try/b'], ['C', '/try/c'], ['D', '/try/d'], ['E', '/try/e'], ['Current', '/']];
 ---
 <nav class="trial-switch" aria-label="Design options">
   {opts.map(([l, h]) => <a href={h} class={l === at ? 'on' : ''}>{l}</a>)}
