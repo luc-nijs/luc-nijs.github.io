@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CV at a Glance</title>
+<style>
+  :root {
+    --bg:#ffffff; --card:#ffffff; --ink:#27223e; --ink2:#5a556e; --muted:#8a8699;
+    --line:#dcdae6; --grid:#eeedf3; --accent:#002e5d; --lime:#bdbf37;
+    --s1:#3b4a8c; /* first author / invited / university roles  */
+    --s2:#9fa22a; /* co-author / conference / teaching roles     */
+    --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+  * { box-sizing:border-box; }
+  html,body { margin:0; background:var(--bg); color:var(--ink);
+    font-family: "Times New Roman", Times, Georgia, serif; }
+  .wrap { max-width:1040px; margin:0 auto; padding:32px 16px 40px; }
+  header { text-align:center; margin-bottom:28px; }
+  .eyebrow { font-family:var(--sans); font-weight:300; font-size:13px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink2); }
+  h1 { font-weight:normal; font-style:italic; font-size:clamp(32px,5.5vw,46px); margin:8px 0 10px; color:var(--ink); }
+  header::after { content:""; display:block; width:60px; height:2px; background:var(--lime); margin:18px auto 0; }
+  .role { color:var(--ink2); font-size:16px; line-height:1.5; }
+  .motto { font-style:italic; color:var(--muted); margin-top:10px; font-size:15px; }
+
+  .tiles { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:22px; }
+  .tile { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px 14px; }
+  .tile .n { font-size:36px; line-height:1; color:var(--accent); border-left:2px solid var(--lime); padding-left:10px; }
+  .tile .l { margin-top:10px; font-family:var(--sans); font-weight:300; font-size:13px; color:var(--ink2); line-height:1.35; }
+
+  @media (max-width:640px){ .tiles { grid-template-columns:repeat(2,1fr); } }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media (max-width:760px){ .grid2 { grid-template-columns:1fr; } }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px 18px 14px; margin-bottom:16px; position:relative; }
+  .card h2 { font-weight:normal; font-size:20px; margin:0 0 2px; }
+  .card .sub { font-family:var(--sans); font-weight:300; font-size:13px; color:var(--muted); margin-bottom:10px; }
+  .legend { font-family:var(--sans); font-weight:300; display:flex; flex-wrap:wrap; gap:14px; font-size:13px; color:var(--ink2); margin-bottom:6px; }
+  .legend i { display:inline-block; width:12px; height:12px; border-radius:3px; margin-right:6px; vertical-align:-1px; }
+  svg { display:block; width:100%; height:auto; overflow:visible; }
+  svg text { font-family: var(--sans); fill:var(--muted); font-size:11px; }
+  svg .lbl { fill:var(--ink2); font-size:12px; }
+  svg .val { fill:var(--ink); font-size:12px; }
+  .hit { fill:transparent; cursor:default; }
+  .hit:hover + g rect, .dim { opacity:1; }
+  .tip { position:absolute; pointer-events:none; font-family:var(--sans); background:#27223e; color:#fff; font-size:13px; line-height:1.4;
+    padding:7px 10px; border-radius:8px; white-space:nowrap; opacity:0; transition:opacity .12s; z-index:5; }
+  .tip b { font-weight:normal; color:#e3e48f; }
+  .note { font-family:var(--sans); font-weight:300; font-size:12px; color:var(--muted); margin-top:6px; }
+  footer { font-family:var(--sans); font-weight:300; letter-spacing:.05em; text-align:center; font-size:12px; color:var(--muted); margin-top:10px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">CV at a glance</div>
+    <h1>Prof. Dr. Luc Nijs</h1>
+    <div class="role">Associate Professor of Early Childhood Music Education · Director, Institute for Musicology and the Arts<br>University of Luxembourg · Visiting Professor, Ghent University</div>
+    <div class="motto">“An open mind, wonder … and participate in the world!”</div>
+  </header>
+
+  <section class="tiles" id="tiles"></section>
+
+  <div class="card">
+    <h2>Publications per year</h2>
+    <div class="sub">85 publications since 2008, including a monograph (2024)</div>
+    <div class="legend"><span><i style="background:var(--s1)"></i>First author</span><span><i style="background:var(--s2)"></i>Co-author</span></div>
+    <div id="pubs"></div>
+  </div>
+
+  <div class="card">
+    <h2>Talks per year</h2>
+    <div class="sub">105 invited lectures &amp; workshops and 45 conference presentations</div>
+    <div class="legend"><span><i style="background:var(--s1)"></i>Invited lectures &amp; workshops</span><span><i style="background:var(--s2)"></i>Conference presentations</span></div>
+    <div id="talks"></div>
+  </div>
+
+  <div class="card">
+    <h2>Career path</h2>
+    <div class="sub">From stage and music school to professorship, 1996 – today</div>
+    <div class="legend"><span><i style="background:var(--s1)"></i>University &amp; research</span><span><i style="background:var(--s2)"></i>Teaching &amp; music practice</span><span>◆ Diploma milestones</span></div>
+    <div id="career"></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h2>Funded projects</h2>
+      <div class="sub">8 projects as PI, co-PI or partner since 2019</div>
+      <div id="grants"></div>
+      <div class="note">Amounts as listed in the CV, in their original currency.</div>
+    </div>
+    <div class="card">
+      <h2>Doctoral guidance</h2>
+      <div class="sub">PhD trajectories at 8 universities &amp; conservatoires</div>
+      <div id="phd"></div>
+    </div>
+  </div>
+
+  <footer>Based on the curriculum vitae of October 2026</footer>
+</div>
+
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+function el(tag, attrs, parent) { const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+function txt(parent, x, y, s, attrs={}) { const t = el('text', {x, y, ...attrs}, parent); t.textContent = s; return t; }
+
+/* tooltip, one per card */
+function tipFor(host) { const card = host.closest('.card'); let t = card.querySelector('.tip');
+  if (!t) { t = document.createElement('div'); t.className = 'tip'; card.appendChild(t); } return t; }
+function bindTip(target, host, html) {
+  const tip = tipFor(host), card = host.closest('.card');
+  target.addEventListener('mousemove', e => { const r = card.getBoundingClientRect();
+    tip.innerHTML = html; tip.style.opacity = 1;
+    let x = e.clientX - r.left + 14, y = e.clientY - r.top - 10;
+    if (x + tip.offsetWidth > r.width - 6) x = e.clientX - r.left - tip.offsetWidth - 14;
+    tip.style.left = x + 'px'; tip.style.top = y + 'px'; });
+  target.addEventListener('mouseleave', () => tip.style.opacity = 0);
+}
+
+/* ---------- stat tiles ---------- */
+[
+  ['85', 'publications'],
+  ['30', 'articles in peer-reviewed international journals'],
+  ['150', 'invited lectures &amp; conference talks'],
+  ['8', 'funded research projects'],
+  ['8', 'PhDs as promotor or co-promotor'],
+  ['15', 'PhD examination committees'],
+  ['6', 'editorial roles at journals'],
+  ['5', 'working languages'],
+].forEach(([n,l]) => document.getElementById('tiles').insertAdjacentHTML('beforeend',
+  `<div class="tile"><div class="n">${n}</div><div class="l">${l}</div></div>`));
+
+/* ---------- stacked bars per year ---------- */
+function stacked(id, years, a, b, nameA, nameB) {
+  const host = document.getElementById(id);
+  const W = Math.max(300, host.clientWidth), H = W < 600 ? 220 : 260, m = {l:28, r:6, t:14, b:26};
+  const svg = el('svg', {viewBox:`0 0 ${W} ${H}`, role:'img'}, host);
+  const max = Math.max(...years.map((_, i) => a[i] + b[i]));
+  const top = Math.ceil(max / 5) * 5, iw = W - m.l - m.r, ih = H - m.t - m.b;
+  const y = v => m.t + ih - v / top * ih, step = iw / years.length, bw = Math.min(30, step * 0.62);
+  for (let v = 0; v <= top; v += 5) {
+    el('line', {x1:m.l, x2:W-m.r, y1:y(v), y2:y(v), stroke: v ? css('--grid') : css('--line'), 'stroke-width':1}, svg);
+    txt(svg, m.l - 6, y(v) + 4, v, {'text-anchor':'end'});
+  }
+  years.forEach((yr, i) => {
+    const cx = m.l + step * i + step / 2, x = cx - bw / 2;
+    const g = el('g', {}, svg);
+    // bottom segment (A) — square bottom on baseline, 2px surface gap above
+    if (a[i]) el('rect', {x, y:y(a[i]), width:bw, height:y(0) - y(a[i]), fill:css('--s1'), rx:0}, g);
+    if (b[i]) { const y0 = y(a[i] + b[i]), h = y(a[i]) - y0 - (a[i] ? 2 : 0);
+      // rounded top end only
+      const r = Math.min(4, h / 2);
+      el('path', {d:`M${x},${y0+h} V${y0+r} Q${x},${y0} ${x+r},${y0} H${x+bw-r} Q${x+bw},${y0} ${x+bw},${y0+r} V${y0+h} Z`, fill:css('--s2')}, g);
+    } else if (a[i]) { // round the top of A when it is the top segment
+      g.firstChild.remove(); const y0 = y(a[i]), h = y(0) - y0, r = Math.min(4, h/2);
+      el('path', {d:`M${x},${y0+h} V${y0+r} Q${x},${y0} ${x+r},${y0} H${x+bw-r} Q${x+bw},${y0} ${x+bw},${y0+r} V${y0+h} Z`, fill:css('--s1')}, g);
+    }
+    const tot = a[i] + b[i];
+    if (tot && step >= 16) txt(svg, cx, y(tot) - 5, tot, {'text-anchor':'middle', class:'val'});
+    const every = step < 22 ? 4 : step < 40 ? 2 : 1;
+    if (i % every === 0)
+      txt(svg, cx, H - 8, yr, {'text-anchor':'middle'});
+    const hit = el('rect', {x:m.l + step*i, y:m.t, width:step, height:ih, class:'hit'}, svg);
+    el('title', {}, hit).textContent = `${yr}: ${a[i]} ${nameA}, ${b[i]} ${nameB}`;
+    bindTip(hit, host, `<b>${yr}</b><br>${nameA}: ${a[i]}<br>${nameB}: ${b[i]}<br>Total: ${tot}`);
+  });
+}
+const Y = (s, e) => Array.from({length:e - s + 1}, (_, i) => s + i);
+
+const DRAW = [];
+const pubYears = Y(2008, 2026);
+const first = {2008:1,2009:1,2010:3,2011:1,2012:2,2013:4,2014:1,2015:1,2016:2,2017:4,2018:2,2019:2,2020:2,2021:3,2023:1,2024:4,2025:1,2026:1};
+const co    = {2009:1,2010:1,2012:2,2013:1,2014:1,2015:1,2016:3,2017:4,2019:2,2020:6,2021:2,2022:6,2023:5,2024:6,2025:2,2026:5};
+DRAW.push(() => stacked('pubs', pubYears, pubYears.map(y => first[y]||0), pubYears.map(y => co[y]||0), 'First author', 'Co-author'));
+
+const talkYears = Y(2009, 2026);
+const inv  = {2013:6,2014:4,2015:5,2016:4,2017:7,2018:5,2019:6,2020:8,2021:6,2022:13,2023:7,2024:18,2025:11,2026:5};
+const conf = {2009:1,2010:3,2011:1,2012:1,2013:2,2014:2,2015:2,2016:2,2017:2,2018:6,2019:5,2020:3,2021:3,2022:2,2023:3,2024:4,2025:2,2026:1};
+DRAW.push(() => stacked('talks', talkYears, talkYears.map(y => inv[y]||0), talkYears.map(y => conf[y]||0), 'Invited', 'Conference'));
+
+/* ---------- career timeline ---------- */
+function career() {
+  const host = document.getElementById('career');
+  const rows = [
+    ['University of Luxembourg', 'Associate Professor · Institute Director · Course Director', [[2022.42, 2026.8, 's1']]],
+    ['Ghent University (IPEM)', 'Doctoral & postdoctoral researcher, then Visiting Professor', [[2008.83, 2022.42, 's1'], [2022.42, 2026.8, 's1', .45]]],
+    ['Royal Conservatory Antwerp', 'Guest lecturer · artistic researcher', [[2019.7, 2022.42, 's1']]],
+    ['AEC Digitisation Working Group', 'Chair (Creative Europe project)', [[2017, 2021.99, 's1']]],
+    ['LUCA School of Arts', 'Researcher, lecturer, co-promotor', [[2013.75, 2024.5, 's1']]],
+    ['Royal Conservatoire The Hague', 'Guest lecturer', [[2014.75, 2022.5, 's2']]],
+    ['Lessius Hogeschool', 'Lecturer, postgraduate course', [[2012.67, 2014.67, 's2']]],
+    ['Music schools in Flanders', 'Clarinet, saxophone & ensemble teacher', [[1996.67, 2008.8, 's2'], [2012.83, 2016.05, 's2']]],
+  ];
+  const marks = [[1997, 'Master in music (clarinet)', 'MA clarinet'], [2008, 'Master in philosophy', 'MA philosophy'], [2012, 'PhD in Art Sciences', 'PhD'], [2022.42, 'Professorship, Luxembourg', 'Professor']];
+  const narrow = host.clientWidth < 620;
+  const W = Math.max(300, host.clientWidth), labW = narrow ? 0 : 250, rowH = narrow ? 44 : 34, m = {t:8, b:60};
+  const H = m.t + rows.length * rowH + m.b, x0 = labW + 8, x1 = W - 10;
+  const s = 1996, e = 2027, x = v => x0 + (v - s) / (e - s) * (x1 - x0);
+  const svg = el('svg', {viewBox:`0 0 ${W} ${H}`, role:'img'}, host);
+  for (let yr = 1996; yr <= 2026; yr += (narrow ? 10 : 5)) {
+    el('line', {x1:x(yr), x2:x(yr), y1:m.t, y2:H - m.b + 4, stroke:css('--grid')}, svg);
+    txt(svg, x(yr), H - m.b + 18, yr, {'text-anchor':'middle'});
+  }
+  rows.forEach(([name, desc, spans], i) => {
+    const yy = m.t + i * rowH;
+    const by = narrow ? yy + 20 : yy + 9, bh = narrow ? 14 : 16;
+    if (narrow) txt(svg, x0, yy + 14, name, {class:'lbl'});
+    else txt(svg, labW, yy + 22, name, {'text-anchor':'end', class:'lbl'});
+    spans.forEach(([a, b, c, op]) => {
+      const r = el('rect', {x:x(a), y:by, width:Math.max(4, x(b) - x(a) - 2), height:bh, rx:4,
+        fill:css('--' + c), 'fill-opacity': op || 1}, svg);
+      const lab = `${Math.floor(a)} – ${b > 2026.5 ? 'today' : Math.floor(b)}`;
+      el('title', {}, r).textContent = `${name}: ${desc} (${lab})`;
+      bindTip(r, host, `<b>${name}</b><br>${desc}<br>${lab}`);
+    });
+  });
+  const my = H - m.b + 32;
+  marks.forEach(([v, label, short]) => {
+    txt(svg, x(v), my + 20, narrow ? "'" + String(Math.floor(v)).slice(2) : short, {'text-anchor':'middle', class:'lbl'});
+    const p = el('path', {d:`M${x(v)},${my-6} L${x(v)+6},${my} L${x(v)},${my+6} L${x(v)-6},${my} Z`, fill:css('--accent')}, svg);
+    el('title', {}, p).textContent = `${Math.floor(v)}: ${label}`;
+    bindTip(p, host, `<b>${Math.floor(v)}</b><br>${label}`);
+  });
+  el('line', {x1:x(2026.8), x2:x(2026.8), y1:m.t, y2:H - m.b + 4, stroke:css('--accent'), 'stroke-dasharray':'3 3'}, svg);
+}
+
+/* ---------- horizontal bars ---------- */
+function hbars(id, data, fmt, color) {
+  const host = document.getElementById(id);
+  const W = Math.max(260, host.clientWidth), rowH = 40, H = data.length * rowH + 4;
+  const svg = el('svg', {viewBox:`0 0 ${W} ${H}`, role:'img'}, host);
+  const max = Math.max(...data.map(d => d[1])), barMax = W - 70;
+  data.forEach(([name, v, extra], i) => {
+    const yy = i * rowH;
+    txt(svg, 0, yy + 13, name, {class:'lbl'});
+    const w = Math.max(4, v / max * barMax);
+    const r = el('rect', {x:0, y:yy + 19, width:w, height:12, rx:4, fill:color}, svg);
+    txt(svg, w + 8, yy + 30, fmt(v, extra), {class:'val'});
+    const hit = el('rect', {x:0, y:yy, width:W, height:rowH, class:'hit'}, svg);
+    el('title', {}, hit).textContent = `${name}: ${fmt(v, extra)}`;
+    bindTip(hit, host, `<b>${name}</b><br>${fmt(v, extra)}${extra && extra.role ? '<br>' + extra.role : ''}`);
+  });
+}
+DRAW.push(() => hbars('grants', [
+  ['AMUSAR · IAS Audacity (2026)', 460, {c:'$', role:'Principal investigator'}],
+  ['SAMUSE · IAS Audacity (2023)', 400, {c:'$', role:'Principal investigator'}],
+  ['CC-ECME · Erasmus+ (2025–28)', 400, {c:'€', role:'Project partner'}],
+  ['EEEP · Horizon MSCA', 200, {c:'€', role:'Coordinator · postdoc S. Moroz'}],
+  ['Music4Resilience · Losch Foundation', 40, {c:'€', role:'Co-PI'}],
+  ['Resilience in Resonance · Creative Europe', 40, {c:'€', role:'Coordinator (PI / co-PI)'}],
+  ['FNR RESCOM · conference', 25, {c:'€', role:'Conference organisation'}],
+  ['MuTechLab · FNR PSP Classic (2025)', 15, {c:'€', role:'Coordinator (PI / co-PI)'}],
+], (v, x) => `${x.c}${v}k`, css('--s1')));
+
+DRAW.push(() => hbars('phd', [
+  ['Member of examination committee', 15, {}],
+  ['Co-promotor', 5, {}],
+  ['Promotor', 3, {}],
+  ['Doctoral guidance committee', 3, {}],
+], v => v + (v === 1 ? ' PhD' : ' PhDs'), css('--s2')));
+
+DRAW.push(career);
+function drawAll() { ['pubs','talks','career','grants','phd'].forEach(id => document.getElementById(id).innerHTML = ''); DRAW.forEach(f => f()); }
+let lastW = 0, rt;
+window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { if (innerWidth !== lastW) { lastW = innerWidth; drawAll(); } }, 150); });
+lastW = innerWidth; drawAll();
+</script>
+</body>
+</html>

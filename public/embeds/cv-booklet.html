@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Luc Nijs – CV Booklet</title>
+<style>
+  :root { --bg:#f4f1ec; --ink:#2b2b2b; --accent:#7a5c3e; --line:#d8cfc4; }
+  html,body { margin:0; height:100%; background:var(--bg); color:var(--ink);
+    font-family: Georgia, "Times New Roman", serif; overflow:hidden; }
+  .wrap { box-sizing:border-box; height:100%; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; padding:16px; gap:12px; }
+  .stage { flex:1; min-height:0; width:100%; display:flex; align-items:center; justify-content:center; perspective:2600px; }
+  .book { position:relative; transition:transform .7s ease; }
+  .leaf { position:absolute; top:0; left:50%; width:50%; height:100%;
+    transform-origin:left center; transform-style:preserve-3d;
+    transition:transform .8s cubic-bezier(.45,.05,.25,1); cursor:pointer; }
+  .leaf.flipped { transform:rotateY(-180deg); }
+  .face { position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden;
+    background:#fff; overflow:hidden; }
+  .face img { width:100%; height:100%; object-fit:contain; display:block; user-select:none; -webkit-user-drag:none; }
+  .face.front { box-shadow: 4px 6px 18px rgba(0,0,0,.18); }
+  .face.back  { transform:rotateY(180deg); box-shadow: -4px 6px 18px rgba(0,0,0,.18); }
+  .face.front::after, .face.back::after { content:""; position:absolute; top:0; bottom:0; width:28px; pointer-events:none; }
+  .face.front::after { left:0;  background:linear-gradient(to right, rgba(0,0,0,.13), transparent); }
+  .face.back::after  { right:0; background:linear-gradient(to left,  rgba(0,0,0,.13), transparent); }
+  /* single-page mode */
+  .single { position:relative; background:#fff; box-shadow:0 6px 22px rgba(0,0,0,.18); }
+  .single img { width:100%; height:100%; object-fit:contain; display:block; transition:opacity .25s, transform .25s; }
+  .single img.out { opacity:0; transform:translateX(var(--dx,0)); }
+  .bar { display:flex; align-items:center; gap:12px; font-size:15px; }
+  .bar button { font:inherit; background:#fff; color:var(--accent); border:1px solid var(--line);
+    border-radius:999px; padding:7px 16px; cursor:pointer; }
+  .bar button:hover:not(:disabled) { background:var(--accent); color:#fff; }
+  .bar button:disabled { opacity:.35; cursor:default; }
+  #count { min-width:96px; text-align:center; }
+  .hint { font-size:12px; opacity:.6; text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="stage" id="stage"></div>
+  <div class="bar">
+    <button id="prev" aria-label="Previous page">&#8592; Prev</button>
+    <span id="count"></span>
+    <button id="next" aria-label="Next page">Next &#8594;</button>
+  </div>
+  <div class="hint">Click or swipe a page to turn it &middot; arrow keys work too</div>
+</div>
+<script>
+/* Replace each line below with the Wix URL of that page image, keeping the quotes and commas. */
+const PAGES = [
+  "/images/dce4d3_691495b81f6d4e9ea4eebc0719c364d4.jpg",
+  "/images/dce4d3_5f6f5c4540cc44d7bfb755ec5d547501.jpg",
+  "/images/dce4d3_2a77e73ff4724a04b7c7e0a2f1db0f03.jpg",
+  "/images/dce4d3_37b79e2bd7de4d5392c1d024d3f769db.jpg",
+  "/images/dce4d3_9d2b06052b5d45609e0f58547044f79f.jpg",
+  "/images/dce4d3_a8fbffa63879495899c49d3550f65ffa.jpg",
+  "/images/dce4d3_00d268bc77cc4b75aa9ded8f6e37a939.jpg",
+  "/images/dce4d3_00cac978fc684d559ada9b2fa8e755fe.jpg",
+  "/images/dce4d3_2f3572ac3ffd4ed4898636d56f2faf07.jpg",
+  "/images/dce4d3_39546a8878b04e96b263cdd832198ef7.jpg",
+  "/images/dce4d3_2a5e5006cf524b56ba5385894e9ff7f6.jpg",
+  "/images/dce4d3_11077c21d3f74bc28ae86207b062a6f3.jpg",
+  "/images/dce4d3_d526753f7fbd418ab10439d8d35b36f5.jpg",
+  "/images/dce4d3_939e2ade40334363a6edfc3196e8e3e3.jpg",
+  "/images/dce4d3_047563ab5ce144b7919124f4d6d4f7de.jpg",
+  "/images/dce4d3_6b26bff4e0664aafab2f766dd2b00f90.jpg",
+  "/images/dce4d3_bd7ff70cd27040e1b4fe77859fe80d74.jpg",
+  "/images/dce4d3_6daad8f11b6e4194b796d386f3ae8388.jpg",
+  "/images/dce4d3_4b08bf9eb7304bc48e220619f81c02bf.jpg",
+  "/images/dce4d3_5ffa5bb7e0864d34b9398025922c028d.jpg",
+  "/images/dce4d3_9555054f3b544eda954c309b30fd956d.jpg",
+  "/images/dce4d3_7bbed066eaf34b0388566bcb3effdfb4.jpg",
+  "/images/dce4d3_6ca02a06d5844be68570e871c17a616a.jpg",
+  "/images/dce4d3_3ca9a57839c84aa09d4633021af3bb1c.jpg"
+];
+const RATIO = 1.414; // page height / width
+const stage = document.getElementById('stage'), countEl = document.getElementById('count'),
+      prevBtn = document.getElementById('prev'), nextBtn = document.getElementById('next');
+const N = PAGES.length, LEAVES = Math.ceil(N / 2);
+let mode = null, spread = 0, single = 0, book, leaves = [], singleImg;
+
+function img(src, alt) { const i = new Image(); i.src = src; i.alt = alt; i.draggable = false; return i; }
+
+function buildBook() {
+  stage.innerHTML = ''; leaves = [];
+  book = document.createElement('div'); book.className = 'book';
+  for (let k = 0; k < LEAVES; k++) {
+    const leaf = document.createElement('div'); leaf.className = 'leaf';
+    const f = document.createElement('div'); f.className = 'face front';
+    f.appendChild(img(PAGES[2*k], 'Page ' + (2*k+1)));
+    const b = document.createElement('div'); b.className = 'face back';
+    if (PAGES[2*k+1]) b.appendChild(img(PAGES[2*k+1], 'Page ' + (2*k+2)));
+    leaf.append(f, b);
+    leaf.addEventListener('click', () => (k < spread ? go(-1) : go(1)));
+    book.appendChild(leaf); leaves.push(leaf);
+  }
+  stage.appendChild(book);
+}
+function buildSingle() {
+  stage.innerHTML = '';
+  const box = document.createElement('div'); box.className = 'single';
+  singleImg = img(PAGES[single], 'Page ' + (single+1));
+  box.appendChild(singleImg);
+  box.addEventListener('click', e => { const r = box.getBoundingClientRect(); go(e.clientX - r.left < r.width/2 ? -1 : 1); });
+  stage.appendChild(box);
+}
+function layout() {
+  const W = stage.clientWidth, H = stage.clientHeight;
+  const wantSingle = W < 700 || W / H < 1.1;
+  const newMode = wantSingle ? 'single' : 'book';
+  if (newMode !== mode) {
+    if (mode === 'book') single = Math.max(0, Math.min(N-1, spread === 0 ? 0 : 2*spread - 1));
+    if (mode === 'single') spread = Math.ceil(single / 2);
+    mode = newMode; mode === 'book' ? buildBook() : buildSingle();
+  }
+  if (mode === 'book') {
+    let pw = Math.min(W / 2, H / RATIO); book.style.width = 2*pw + 'px'; book.style.height = pw*RATIO + 'px';
+  } else {
+    let pw = Math.min(W, H / RATIO); const s = stage.firstChild; s.style.width = pw + 'px'; s.style.height = pw*RATIO + 'px';
+  }
+  render(true);
+}
+function render() {
+  if (mode === 'book') {
+    leaves.forEach((leaf, k) => {
+      const flipped = k < spread;
+      leaf.classList.toggle('flipped', flipped);
+      leaf.style.zIndex = flipped ? k + 1 : LEAVES - k + 1;
+    });
+    // centre the closed book (front or back cover only)
+    const shift = spread === 0 ? '-25%' : (spread === LEAVES && N % 2 === 0 ? '25%' : '0');
+    book.style.transform = 'translateX(' + shift + ')';
+    const l = spread === 0 ? 0 : 2*spread, r = 2*spread + 1;
+    countEl.textContent = spread === 0 ? '1 / ' + N : (r <= N ? (l) + '–' + r : l) + ' / ' + N;
+    prevBtn.disabled = spread === 0; nextBtn.disabled = spread >= LEAVES;
+  } else {
+    countEl.textContent = (single + 1) + ' / ' + N;
+    prevBtn.disabled = single === 0; nextBtn.disabled = single >= N - 1;
+  }
+}
+function go(dir) {
+  if (mode === 'book') {
+    const t = spread + dir; if (t < 0 || t > LEAVES) return;
+    const leaf = leaves[dir > 0 ? spread : spread - 1];
+    leaf.style.zIndex = 1000; // keep the turning leaf on top
+    spread = t; leaf.classList.toggle('flipped', dir > 0);
+    setTimeout(render, 820);
+    const shift = spread === 0 ? '-25%' : (spread === LEAVES && N % 2 === 0 ? '25%' : '0');
+    book.style.transform = 'translateX(' + shift + ')';
+    prevBtn.disabled = spread === 0; nextBtn.disabled = spread >= LEAVES;
+  } else {
+    const t = single + dir; if (t < 0 || t >= N) return;
+    single = t; singleImg.style.setProperty('--dx', (dir > 0 ? -30 : 30) + 'px'); singleImg.classList.add('out');
+    setTimeout(() => { singleImg.src = PAGES[single]; singleImg.alt = 'Page ' + (single+1);
+      singleImg.style.setProperty('--dx', (dir > 0 ? 30 : -30) + 'px');
+      requestAnimationFrame(() => singleImg.classList.remove('out')); render(); }, 230);
+  }
+}
+prevBtn.onclick = () => go(-1); nextBtn.onclick = () => go(1);
+document.addEventListener('keydown', e => { if (e.key === 'ArrowRight') go(1); if (e.key === 'ArrowLeft') go(-1); });
+let tx = null;
+stage.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, {passive:true});
+stage.addEventListener('touchend', e => { if (tx === null) return; const dx = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) > 40) { e.preventDefault(); go(dx < 0 ? 1 : -1); } tx = null; });
+window.addEventListener('resize', layout);
+layout();
+</script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+---
+import '../styles/site.css';
+import '../styles/type.css';
+
+interface Props { title: string; description?: string; slug: string; bg?: string }
+const { title, description = '', slug, bg = '#f5f5f5' } = Astro.props;
+
+const main = [
+  { label: 'Home', href: '/' },
+  { label: 'About Me', href: '/aboutlucnijs' },
+  { label: 'Publications', href: '/lucnijspublications' },
+  { label: 'Lectures/Workshops/Podcasts', href: '/lucnijslectures' },
+];
+const more = [
+  { label: 'Research', href: '/lucnijsresearch' },
+  { label: 'PhD students', href: '/phd-students' },
+  { label: 'Teaching', href: '/lucnijsteaching' },
+  { label: 'Agenda', href: '/agenda' },
+  { label: 'Contact Me', href: '/contact-me' },
+];
+const current = '/' + slug;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Overlock&display=swap" rel="stylesheet" />
+  </head>
+  <body id="top" style={`background:${bg}`}>
+    <header class="site-header">
+      <a class="site-title" href="/">Luc Nijs</a>
+      <p class="site-tagline">RESEARCHER&#9116;EDUCATOR&#9116;MUSICIAN</p>
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+          {main.map((m) => <li><a href={m.href} class={current === m.href ? 'active' : ''}>{m.label}</a></li>)}
+          <li class="more">
+            <button type="button" aria-haspopup="true">More</button>
+            <ul>
+              {more.map((m) => <li><a href={m.href} class={current === m.href ? 'active' : ''}>{m.label}</a></li>)}
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main><slot /></main>
+    <footer class="site-footer">© 2024 by Luc Nijs</footer>
+  </body>
+</html>

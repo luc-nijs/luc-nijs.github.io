@@ -1,0 +1,31 @@
+---
+interface Props { items: { src: string; title: string }[]; height: number }
+const { items, height } = Astro.props;
+---
+<div class="slideshow" style={`height:${height}px`} data-slideshow>
+  {items.map((it, i) => (
+    <figure class={i === 0 ? 'slide on' : 'slide'}>
+      <img src={it.src} alt={it.title} loading={i === 0 ? 'eager' : 'lazy'} />
+      {it.title && <figcaption>{it.title}</figcaption>}
+    </figure>
+  ))}
+  <button type="button" class="prev" aria-label="Previous">‹</button>
+  <button type="button" class="next" aria-label="Next">›</button>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-slideshow]').forEach((root) => {
+    const slides = [...root.querySelectorAll<HTMLElement>('.slide')];
+    let i = 0;
+    const show = (n: number) => {
+      slides[i].classList.remove('on');
+      i = (n + slides.length) % slides.length;
+      slides[i].classList.add('on');
+    };
+    root.querySelector('.prev')?.addEventListener('click', () => show(i - 1));
+    root.querySelector('.next')?.addEventListener('click', () => show(i + 1));
+    let timer = setInterval(() => show(i + 1), 5000);
+    root.addEventListener('mouseenter', () => clearInterval(timer));
+    root.addEventListener('mouseleave', () => (timer = setInterval(() => show(i + 1), 5000)));
+  });
+</script>
