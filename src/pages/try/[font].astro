@@ -10,11 +10,12 @@ const FONTS = {
   manrope: { label: 'Manrope', head: 'Manrope', body: 'Manrope', weight: 300, css: 'Manrope:wght@300;400;500;600' },
   'dm-serif': { label: 'DM Serif Display', head: 'DM Serif Display', body: 'Inter', weight: 400, css: 'DM+Serif+Display&family=Inter:wght@400;500;600' },
   outfit: { label: 'Outfit', head: 'Outfit', body: 'Outfit', weight: 300, css: 'Outfit:wght@300;400;500;600' },
+  'fraunces-manrope': { label: 'Fraunces + Manrope', head: 'Fraunces', body: 'Manrope', weight: 300, css: 'Fraunces:opsz,wght@9..144,300;9..144,400&family=Manrope:wght@400;500;600' },
   fraunces: { label: 'Fraunces', head: 'Fraunces', body: 'Inter', weight: 300, css: 'Fraunces:opsz,wght@9..144,300;9..144,400&family=Inter:wght@400;500;600' },
 };
 
 export function getStaticPaths() {
-  return ['inter', 'manrope', 'dm-serif', 'outfit', 'fraunces'].map((font) => ({ params: { font } }));
+  return ['inter', 'manrope', 'dm-serif', 'outfit', 'fraunces', 'fraunces-manrope'].map((font) => ({ params: { font } }));
 }
 
 const { font } = Astro.params;
