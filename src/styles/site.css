@@ -96,7 +96,7 @@ hr { margin: 0; border: 0; border-top: 2px solid var(--accent); }
 .grey-photo img { width: 100%; height: auto; }
 .grey-text { padding: 16px 28px 0; }
 .grey-text:last-child { padding-bottom: 24px; }
-.go { font-size: 1.1em; }
+.go { display: inline-block; width: .95em; height: .95em; margin-left: .15em; vertical-align: -.12em; background: currentColor; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' d='M10 4H5.5A2.5 2.5 0 0 0 3 6.5v12A2.5 2.5 0 0 0 5.5 21h12a2.5 2.5 0 0 0 2.5-2.5V14'/%3E%3Cpath d='M14.5 2.5 22 9l-7.5 6.5V12c-3.8 0-6.3 1.4-8 4.8.2-5.6 3-9.3 8-9.9z'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' d='M10 4H5.5A2.5 2.5 0 0 0 3 6.5v12A2.5 2.5 0 0 0 5.5 21h12a2.5 2.5 0 0 0 2.5-2.5V14'/%3E%3Cpath d='M14.5 2.5 22 9l-7.5 6.5V12c-3.8 0-6.3 1.4-8 4.8.2-5.6 3-9.3 8-9.9z'/%3E%3C/svg%3E") center / contain no-repeat; }
 .student-row { align-items: stretch; }
 .student-row > .col:first-child, .student-row > .col:first-child > .b { display: flex; flex-direction: column; flex: 1; }
 .student-card { flex: 1; padding-bottom: 14px; }
