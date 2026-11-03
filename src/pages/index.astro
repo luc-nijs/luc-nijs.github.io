@@ -1,67 +1,86 @@
 ---
-import Base from '../layouts/Base.astro';
-import Slideshow from '../components/Slideshow.astro';
+import HeroPhotos from '../components/HeroPhotos.astro';
+import { nav, focus, intro, news, lectures, links } from '../data/home.js';
 ---
-<Base title={"Luc Nijs ⎸ Music Education Research"} description={"This is the homepage of the personal website of Luc Nijs, Associate Professor @ University of Luxembourg. This site is about music educational research and practice."} slug="" bg="rgb(255, 255, 255)">
-<section style="padding:66px 16px 32px"><div class="inner" style="max-width:1054px">
-<div class="row" style="width:96.49%">
-<div class="col" style="width:41.59%">
-<div class="b" style="margin-top:7px"><Slideshow items={[{"src":"/images/dce4d3_b9a3dd7c68cb4f14a42e101115f0f7f3.jpg","title":"","w":2000,"h":3000},{"src":"/images/dce4d3_d872328e10cc49178cca72a6322df856.jpg","title":"EAS conference","w":271,"h":480},{"src":"/images/dce4d3_89da1cce2e8a48e7ae8901969bb8cffb.jpg","title":"","w":541,"h":842},{"src":"/images/dce4d3_a5e79444277b482e92de5f5443e97b6a.jpg","title":"","w":3888,"h":5184},{"src":"/images/dce4d3_84a794040423420191d35fc0b74eb329.jpeg","title":"","w":826,"h":1586},{"src":"/images/dce4d3_cdc42abd5b0549bfb32e52b3c8fc41c3.jpg","title":"ISME conference","w":621,"h":928},{"src":"/images/dce4d3_51abdb9f9f0f4e87a4db5262cda8fd87.jpeg","title":"Amsterdam","w":757,"h":1270},{"src":"/images/dce4d3_6972dfa2df394b43a7270dcfec62f9de.jpeg","title":"Gentse Feesten","w":1365,"h":2048},{"src":"/images/dce4d3_57ee66c3390c4c0bb75eb841c06c3565.jpeg","title":"Bretagne","w":1080,"h":1618},{"src":"/images/dce4d3_45fbfc50e36041ed961e10babe14fbae.jpeg","title":"","w":1067,"h":1600},{"src":"/images/dce4d3_3c087e6f1634435fa71f639a56e56167.jpeg","title":"","w":1080,"h":1618},{"src":"/images/dce4d3_79280c38caf9486fb72ddd1bd5a7ec52.jpg","title":"ICDS conference","w":640,"h":480},{"src":"/images/dce4d3_c358eefd59e14afea340f7823dec7416.jpeg","title":"","w":1067,"h":1600},{"src":"/images/dce4d3_0d3aef317ed549f788341e9a6b3e68ca.jpeg","title":"luc_mocap","w":2048,"h":1536},{"src":"/images/dce4d3_ec011f5110fe46eb8d295463cad93d2e.jpg","title":"luc_lectureUL20_edited","w":746,"h":540}]} height={273} /></div>
-</div>
-<div class="col" style="width:57.03%;margin-left:1.38%">
-<div class="b" style=""><div class="rt"><p class="ff-serif fs-18 c-27223e lh-140">Welcome to my personal website!</p>
-<p class="ff-serif fs-18 c-27223e lh-140">I'm a <strong>musician</strong>, <strong>educator</strong> and <strong>researcher</strong>, affiliated as an Associate Professor in Early Childhood Music Education to the University of Luxemburg. I am also affiliated to IPEM at Ghent University, as a Visiting Professor. Previously, I was affiliated to IPEM (Ghent University) as a Ph.D. student and postdoc, and to the Royal Conservatoire Antwerp as a Ph.D. student in the arts. </p>
-<p class="ff-serif fs-18 c-27223e lh-140">I devote my time to the development of [research &amp; practice]-based innovative <strong>movement-based approaches to</strong> <strong>instrumental music teaching and learning (in Early Childhood)</strong>. </p>
-<p class="ff-serif fs-18 c-27223e lh-140">The leitmotiv in my work is the integration of theoretical, empirical and practical research. Importantly, my research is constantly inspired by my experience as performer and teacher.</p>
-<p class="ff-serif fs-18 c-27223e lh-140">Next to my work as an academic, I am a guest lecturer at different conservatoires. I play the clarinet in a balkan/klezmer band with some of my friends, the Holy7.</p></div></div>
-</div>
-</div>
-<div class="b" style="margin-left:41.46%;width:13.76%;margin-top:20px"><a class="btn" href="/aboutlucnijs" style="min-height:26px;color:rgb(0, 46, 93);font-size:14px;font-family:Overlock,sans-serif;border:1px solid rgba(0, 46, 93, 0.86);border-radius:29px">Read More</a></div>
-</div></section>
-<section style="padding:22px 16px 24px;background:rgb(202, 199, 218)"><div class="inner" style="max-width:980px">
-<div class="row" style="margin-left:1.84%;width:96.33%">
-<div class="col" style="width:38.98%">
-<div class="b" style=""><div class="rt"><h2 class="ff-sans fs-28 c-27223e ta-center">NEWS</h2></div></div>
-</div>
-<div class="col" style="width:50.32%;margin-left:10.70%">
-<div class="b" style=""><div class="rt"><h2 class="ff-sans fs-28 c-27223e">UPCOMING INVITED LECTURES</h2></div></div>
-</div>
-</div>
-<div class="b" style="margin-left:14.90%;width:11.33%;margin-top:9px"><hr style="border-top:2px solid rgb(39, 34, 62)"></div>
-<div class="b" style="margin-left:66.12%;width:11.43%"><hr style="border-top:2px solid rgb(39, 34, 62)"></div>
-<div class="row" style="margin-left:1.84%;width:97.24%;margin-top:16px">
-<div class="col" style="width:46.07%">
-<div class="b" style=""><div class="rt"><p class="ff-sans fs-14 c-27223e lh-140">Our project <strong>AMUSAR</strong>, “Augmented MUsic Skill Acquisition in Rhythm” has been approved for funding by the Institute for Advanced Studies (IAS) at the <a href="https://www.facebook.com/uni.lu?__cft__[0]=AZhM8Uy_LX4g21ozY6ejioa6qXx5ifSL-AmDfuLYQPz3JQCto3_nes5SAWKuqVoMRfwEAMVmIifM_ojHFFMpW5xNsWjmZzo0ZO6O_ZjqhmNiNfk3CI5h8iNSFhTe5z7b0RPm-iRChHPjVA&amp;__tn__=-]K-R" class="nou" target="_blank" rel="noopener">University of Luxembourg</a>. see <a href="https://www.uni.lu/fhse-en/research-projects/amusar/" target="_blank" rel="noopener">here</a></p>
-<p class="ff-sans fs-14 c-27223e lh-140">&nbsp;</p>
-<p class="ff-sans fs-14 c-27223e lh-140">Our project <strong>Music4 Resilience </strong>has been accepted for funding by the Losch Foundation in Luxembourg. Collaboration with Potheini Vaioulli</p>
-<p class="ff-sans fs-14 c-27223e lh-140">&nbsp;</p></div></div>
-</div>
-<div class="col" style="width:50.68%;margin-left:3.25%">
-<div class="b" style=""><div class="rt"><p class="ff-sans fw-light fs-14 c-000000"><strong>2026.04.29</strong><span class="c-27223e"><strong> </strong></span>∣ Matinée de réflexion: la clarinette à 6 ans, organised by the Luxembourgish Clarinet Association (Fentange, LU)</p>
-<p class="ff-sans fw-light fs-14 c-000000"><strong>2026.06.09</strong><span class="c-27223e"><strong> </strong></span>∣ SWARMUSE: Operationalizing Embodied Music Pedagogy through Swarm Intelligence @ ANTS Conference (Darmstadt, DE)</p>
-<p class="ff-sans fw-light fs-14 c-000000"><strong>2026.07.12</strong><span class="c-27223e"><strong> </strong></span>∣ Music and AI: thinking outside the box - a conversation with Cédric Kayser (Ministry of Culture) (Remersche,-Schengen, LU)</p>
-<p class="ff-sans fw-light fs-14 c-000000"><strong>2026.07.25</strong><span class="c-27223e"><strong>-31 </strong></span>∣ Several contributions @ ISME World Conference (Montreal, CA). See here: <a href="https://isme2026.kimupe.education/" class="nou" target="_blank" rel="noopener">https://isme2026.kimupe.education/</a> (ask me for the password)</p>
-<p class="ff-sans fw-light fs-14 c-000000"><strong>2026.09.25</strong><span class="c-27223e"><strong> </strong></span>∣ Felt From Within. The Musician–Instrument Relationship as the Ground of Subjective Experience in Performance @ Music and Introspection Meeting (Tübingen, DE)</p>
-<p class="ff-sans fw-light fs-14 c-000000"><strong>2026.10.16</strong><span class="c-27223e"><strong> </strong></span>∣ A kinemusical approach to instrumental music education @ Calrinet &amp; Saxophone day (Knokke-Heist, BE)</p>
-<p class="ff-sans fs-14 c-27223e">&nbsp;</p></div></div>
-</div>
-</div>
-<div class="b" style="margin-left:49.69%;width:42.65%"><a class="btn" href="/agenda" style="min-height:27px;color:rgb(0, 46, 93);font-size:14px;font-family:Overlock,sans-serif;border:1px solid rgba(0, 46, 93, 0.86);border-radius:29px">see all lectures/workshops</a></div>
-</div></section>
-<section style="padding:28px 16px 39px"><div class="inner" style="max-width:980px">
-<div class="row" style="margin-left:12.65%;width:74.69%">
-<div class="col" style="width:5.87%">
-<div class="b" style=""><img src="/images/dce4d3_06e520a21c074b5483bdfba841434ccd.png" alt="logo_uniLu.png" loading="lazy" style="aspect-ratio:43/43;object-fit:cover"></div>
-</div>
-<div class="col" style="width:39.89%;margin-left:1.91%">
-<div class="b" style="margin-top:14px"><div class="rt"><p class="ff-sans fs-14 c-27223e"><strong>University of Luxembourg - </strong><a href="https://wwwen.uni.lu/research/fhse/desw/people/luc_nijs" target="_blank" rel="noopener"><strong>personal page</strong></a></p></div></div>
-</div>
-<div class="col" style="width:5.60%;margin-left:0.68%">
-<div class="b" style="margin-top:4px"><img src="/images/dce4d3_cce7491bdb674ec695782ffc0a0eb57e.png" alt="logo_Ugent.png" loading="lazy" style="aspect-ratio:41/36;object-fit:cover"></div>
-</div>
-<div class="col" style="width:42.49%;margin-left:3.55%">
-<div class="b" style="margin-top:14px"><div class="rt"><p class="ff-sans fs-14 c-27223e"><strong>Ghent University - </strong><a href="https://research.flw.ugent.be/en/luc.nijs" target="_blank" rel="noopener"><strong>personal page</strong></a></p></div></div>
-</div>
-</div>
-</div></section>
-</Base>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="This is the homepage of the personal website of Luc Nijs, Associate Professor @ University of Luxembourg. This site is about music educational research and practice." />
+<title>Luc Nijs ⎸ Music Education Research</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,300..600;1,300..500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style is:global>
+  :root { --head: 'Inter Tight', sans-serif; --body: Inter, sans-serif; --bg: #131316; --panel: #1c1c21; --text: #ecebe6; --soft: #a3a2a8; --line: #2e2e35; --accent: #8fb6dc; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 400 16.5px/1.6 var(--body); }
+  a { color: inherit; text-underline-offset: 3px; }
+  a:hover { color: var(--accent); }
+  img { display: block; width: 100%; }
+  strong { font-weight: 600; color: #fff; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 36px; }
+  header.top { display: flex; flex-wrap: wrap; gap: 8px 32px; justify-content: flex-end; align-items: baseline; padding-block: 26px; }
+  .menu { display: flex; flex-wrap: wrap; gap: 4px 20px; font-size: 14px; color: var(--text); }
+  .menu a { text-decoration: none; }
+  .hero { padding-block: 34px 8px; }
+  .about .fade { height: 100%; min-height: 400px; opacity: .4; background: none;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 18%, #000 82%, transparent), linear-gradient(to bottom, transparent, #000 12%, #000 76%, transparent);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(to right, transparent, #000 18%, #000 82%, transparent), linear-gradient(to bottom, transparent, #000 12%, #000 76%, transparent);
+    mask-composite: intersect; }
+  .about .fade figcaption { display: none; }
+  .kicker { margin: 18px 0 0; color: var(--accent); font-size: 13px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; }
+  h1 { margin: 0; font: 300 clamp(52px, 7.2vw, 92px)/1 var(--head); letter-spacing: -.025em; }
+  .about { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; padding-block: 28px 64px; color: #d2d1cc; font-size: 16px; }
+  .about p { margin: 0; }
+  .about p + p { margin-top: 14px; }
+  .more { display: inline-block; margin-top: 16px; color: var(--accent); font-weight: 500; font-size: 15px; text-decoration: none; }
+  .panels { display: grid; grid-template-columns: 1fr 1.8fr; gap: 16px; }
+  .panel { padding: 34px 36px; background: var(--panel); border-radius: 4px; }
+  h2 { margin: 0 0 22px; font: 400 26px var(--head); }
+  .news p { margin: 0 0 18px; font-size: 16px; line-height: 1.5; color: #d2d1cc; }
+  ol.talks { margin: 0; padding: 0; list-style: none; }
+  .talks li { display: grid; grid-template-columns: 112px 1fr; gap: 20px; padding: 12px 0; border-top: 1px solid var(--line); font-size: 15.5px; line-height: 1.4; }
+  .talks time { color: var(--accent); font-size: 13px; line-height: 1.7; font-variant-numeric: tabular-nums; }
+  .talks small { display: block; margin-top: 2px; color: var(--soft); font-size: 13px; }
+  footer.wrap { display: flex; flex-wrap: wrap; gap: 8px 28px; justify-content: space-between; margin-top: 72px; padding-block: 26px 70px; border-top: 1px solid var(--line); color: var(--soft); font-size: 14px; }
+  @media (max-width: 860px) {
+    .wrap { padding: 0 20px; }
+    .about .fade { height: 320px; min-height: 0; }
+    .about, .panels { grid-template-columns: 1fr; gap: 20px; }
+    .panel { padding: 26px 22px; }
+    .talks li { grid-template-columns: 1fr; gap: 2px; }
+  }
+</style>
+</head>
+<body>
+  <header class="top wrap">
+    <nav class="menu">{nav.map(([l, h]) => <a href={h}>{l}</a>)}</nav>
+  </header>
+  <section class="hero">
+    <div class="wrap">
+      <h1>Luc Nijs</h1>
+      <p class="kicker">Researcher · Educator · Musician</p>
+    </div>
+  </section>
+  <main class="wrap">
+    <section class="about">
+      <HeroPhotos />
+      <div><p set:html={intro[0]} /><p set:html={focus} /></div>
+      <div><p set:html={intro[1]} /><p set:html={intro[2]} /><a class="more" href="/aboutlucnijs">More about me →</a></div>
+    </section>
+    <section class="panels">
+      <div class="panel news"><h2>News</h2>{news.map((n) => <p set:html={n} />)}</div>
+      <div class="panel">
+        <h2>Invited lectures</h2>
+        <ol class="talks">{lectures.map(([d, t, w, x]) => <li><time>{d}</time><span>{t}<small>{w}</small>{x && <small set:html={x} />}</span></li>)}</ol>
+        <a class="more" href="/agenda">See all lectures and workshops →</a>
+      </div>
+    </section>
+  </main>
+  <footer class="wrap">
+    <span>© 2026 by Luc Nijs</span>
+    <span>{links.map(([l, h], i) => <>{i > 0 && ' · '}<a href={h} target="_blank" rel="noopener">{l}</a></>)}</span>
+  </footer>
+</body>
+</html>

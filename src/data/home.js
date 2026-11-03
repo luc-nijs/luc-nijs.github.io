@@ -1,4 +1,3 @@
-// Real home page content, shared by the design trials.
 export const nav = [
   ['About', '/aboutlucnijs'],
   ['Publications', '/lucnijspublications'],
@@ -9,8 +8,6 @@ export const nav = [
   ['Agenda', '/agenda'],
   ['Contact', '/contact-me'],
 ];
-
-export const lead = 'Movement-based approaches to instrumental music teaching and learning (in Early Childhood).';
 
 export const focus = 'I devote my time to the development of [research &amp; practice]-based innovative <strong>movement-based approaches to instrumental music teaching and learning (in Early Childhood)</strong>.';
 

@@ -44,16 +44,6 @@ hr { margin: 0; border: 0; border-top-style: solid; }
 .contact-form input, .contact-form textarea { width: 100%; padding: 6px 8px; border: 1px solid #c9c7d6; font: inherit; }
 .contact-form button { justify-self: end; padding: 6px 22px; border: 1px solid #002e5d; border-radius: 29px; background: none; color: #002e5d; }
 
-/* Slideshow */
-.slideshow { position: relative; overflow: hidden; }
-.slide { position: absolute; inset: 0; margin: 0; opacity: 0; transition: opacity .5s; }
-.slide.on { opacity: 1; }
-.slide img { width: 100%; height: 100%; object-fit: contain; }
-.slide figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 4px 8px; background: rgba(0, 0, 0, .4); color: #fff; font-size: 12px; text-align: center; }
-.slideshow button { position: absolute; top: 50%; transform: translateY(-50%); padding: 4px 10px; border: 0; background: rgba(0, 0, 0, .35); color: #fff; font-size: 20px; cursor: pointer; }
-.prev { left: 0; }
-.next { right: 0; }
-
 /* Phones: stack everything */
 @media (max-width: 760px) {
   .row { display: block; width: 100% !important; margin-left: 0 !important; }
