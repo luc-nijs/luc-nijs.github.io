@@ -20,16 +20,16 @@ import { nav, lead, intro, news, lectures, links } from '../../try/content.js';
   img { display: block; width: 100%; }
   strong { font-weight: 600; color: #fff; }
   .wrap { max-width: 1200px; margin: 0 auto; padding: 0 36px; }
-  header.top { position: absolute; inset: 0 0 auto; z-index: 3; display: flex; flex-wrap: wrap; gap: 8px 32px; justify-content: space-between; align-items: baseline; padding-block: 26px; }
+  header.top { display: flex; flex-wrap: wrap; gap: 8px 32px; justify-content: space-between; align-items: baseline; padding-block: 26px; }
   .name { font: italic 300 26px Fraunces, serif; text-decoration: none; }
   .menu { display: flex; flex-wrap: wrap; gap: 4px 20px; font-size: 14px; color: var(--text); }
   .menu a { text-decoration: none; }
-  .hero { position: relative; min-height: 700px; display: flex; align-items: flex-end; overflow: hidden; }
-  .hero .fade { position: absolute; top: 0; right: 0; width: 52%; height: 100%; }
-  .hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(19, 19, 22, .97) 7%, rgba(19, 19, 22, .55) 13%, transparent 24%), linear-gradient(90deg, var(--bg) 48%, rgba(19, 19, 22, .1) 72%, transparent), linear-gradient(0deg, var(--bg), transparent 26%); }
-  .hero .wrap { position: relative; z-index: 2; width: 100%; padding-block: 120px 56px; }
+  .hero { position: relative; min-height: 640px; display: flex; align-items: flex-end; overflow: hidden; }
+  .hero .fade { position: absolute; top: 0; right: 0; width: 55%; height: 100%; }
+  .hero::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, var(--bg) 45%, transparent 53%), linear-gradient(0deg, var(--bg), transparent 9%); }
+  .hero .wrap { position: relative; z-index: 2; width: 100%; padding-block: 40px 56px; }
   .kicker { margin: 0 0 20px; color: var(--lime); font-size: 13px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; }
-  h1 { max-width: 13.5em; margin: 0; font: 300 clamp(36px, 4.6vw, 60px)/1.08 Fraunces, serif; letter-spacing: -.015em; }
+  h1 { max-width: 40%; margin: 0; font: 300 clamp(32px, 3.7vw, 50px)/1.1 Fraunces, serif; letter-spacing: -.015em; }
   .about { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; padding-block: 44px 72px; color: #d2d1cc; font-size: 16px; }
   .about p { margin: 0; }
   .more { display: inline-block; margin-top: 16px; color: var(--lime); font-weight: 500; font-size: 15px; text-decoration: none; }
@@ -44,11 +44,11 @@ import { nav, lead, intro, news, lectures, links } from '../../try/content.js';
   footer.wrap { display: flex; flex-wrap: wrap; gap: 8px 28px; justify-content: space-between; margin-top: 72px; padding-block: 26px 70px; border-top: 1px solid var(--line); color: var(--soft); font-size: 14px; }
   @media (max-width: 860px) {
     .wrap { padding: 0 20px; }
-    header.top { position: static; }
     .hero { display: block; min-height: 0; }
     .hero .fade { position: relative; width: 100%; height: 400px; }
     .hero::after { display: none; }
     .hero .wrap { padding-block: 30px 20px; }
+    h1 { max-width: none; }
     .about, .panels { grid-template-columns: 1fr; gap: 20px; }
     .panel { padding: 26px 22px; }
     .talks li { grid-template-columns: 1fr; gap: 2px; }
@@ -75,7 +75,7 @@ import { nav, lead, intro, news, lectures, links } from '../../try/content.js';
       <div class="panel news"><h2>News</h2>{news.map((n) => <p set:html={n} />)}<a class="more" href="/aboutlucnijs">More about me →</a></div>
       <div class="panel">
         <h2>Invited lectures</h2>
-        <ol class="talks">{lectures.map(([d, t, w]) => <li><time>{d}</time><span>{t}<small>{w}</small></span></li>)}</ol>
+        <ol class="talks">{lectures.map(([d, t, w, x]) => <li><time>{d}</time><span>{t}<small>{w}</small>{x && <small set:html={x} />}</span></li>)}</ol>
         <a class="more" href="/agenda">See all lectures and workshops →</a>
       </div>
     </section>

@@ -27,7 +27,7 @@ export const lectures = [
   ['2026.04.29', 'Matinée de réflexion: la clarinette à 6 ans, organised by the Luxembourgish Clarinet Association', 'Fentange, LU'],
   ['2026.06.09', 'SWARMUSE: Operationalizing Embodied Music Pedagogy through Swarm Intelligence @ ANTS Conference', 'Darmstadt, DE'],
   ['2026.07.12', 'Music and AI: thinking outside the box - a conversation with Cédric Kayser (Ministry of Culture)', 'Remersche-Schengen, LU'],
-  ['2026.07.25-31', 'Several contributions @ ISME World Conference', 'Montreal, CA'],
+  ['2026.07.25-31', 'Several contributions @ ISME World Conference', 'Montreal, CA', 'See <a href="https://isme2026.kimupe.education/" target="_blank" rel="noopener">isme2026.kimupe.education</a> (ask me for the password)'],
   ['2026.09.25', 'Felt From Within. The Musician–Instrument Relationship as the Ground of Subjective Experience in Performance @ Music and Introspection Meeting', 'Tübingen, DE'],
   ['2026.10.16', 'A kinemusical approach to instrumental music education @ Calrinet & Saxophone day', 'Knokke-Heist, BE'],
 ];
