@@ -96,6 +96,7 @@ hr { margin: 0; border: 0; border-top: 2px solid var(--accent); }
 .grey-photo img { width: 100%; height: auto; }
 .grey-text { padding: 16px 28px 0; }
 .grey-text:last-child { padding-bottom: 24px; }
+.go { font-size: 1.1em; }
 .student-row { align-items: stretch; }
 .student-row > .col:first-child, .student-row > .col:first-child > .b { display: flex; flex-direction: column; flex: 1; }
 .student-card { flex: 1; padding-bottom: 14px; }
