@@ -25,7 +25,12 @@ import { nav, lead, intro, news, lectures, links } from '../../try/content.js';
   .menu { display: flex; flex-wrap: wrap; gap: 4px 20px; font-size: 14px; color: var(--text); }
   .menu a { text-decoration: none; }
   .hero { position: relative; min-height: 500px; display: flex; align-items: flex-end; overflow: hidden; }
-  .hero .fade { position: absolute; top: 0; right: max(36px, calc((100vw - 1200px) / 2 + 36px)); width: 38%; max-width: 460px; height: 100%; }
+  .hero .fade { position: absolute; top: 0; right: max(36px, calc((100vw - 1200px) / 2 + 36px)); width: 38%; max-width: 460px; height: 100%; background: none;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 24%, #000 84%, transparent), linear-gradient(to bottom, transparent, #000 14%, #000 74%, transparent);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(to right, transparent, #000 24%, #000 84%, transparent), linear-gradient(to bottom, transparent, #000 14%, #000 74%, transparent);
+    mask-composite: intersect; }
+  .hero .fade figcaption { right: 20%; bottom: 16%; }
   .hero::after { content: ''; position: absolute; inset: 0; pointer-events: none; display: none; }
   .hero .wrap { position: relative; z-index: 2; width: 100%; padding-block: 40px 44px; }
   .kicker { margin: 0 0 20px; color: var(--lime); font-size: 13px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; }
@@ -45,7 +50,10 @@ import { nav, lead, intro, news, lectures, links } from '../../try/content.js';
   @media (max-width: 860px) {
     .wrap { padding: 0 20px; }
     .hero { display: block; min-height: 0; }
-    .hero .fade { position: relative; right: auto; width: 100%; max-width: none; height: 320px; }
+    .hero .fade { position: relative; right: auto; width: 100%; max-width: none; height: 340px;
+      -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent); -webkit-mask-composite: source-over;
+      mask-image: linear-gradient(to bottom, #000 70%, transparent); mask-composite: add; }
+    .hero .fade figcaption { right: 12px; bottom: 24%; }
     .hero::after { display: none; }
     .hero .wrap { padding-block: 30px 20px; }
     h1 { max-width: none; }
