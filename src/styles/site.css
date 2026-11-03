@@ -66,3 +66,19 @@ hr { margin: 0; border: 0; border-top-style: solid; }
 /* On-page menu beside the content */
 .anchor-fixed { position: fixed; top: 300px; z-index: 5; font-size: 13px; color: #8a8699; }
 @media (max-width: 1180px) { .anchor-fixed { display: none; } }
+
+/* Cards: one size across all pages */
+.card-grid { display: grid; gap: 16px; justify-content: center; }
+.card-grid.cols-2 { grid-template-columns: repeat(2, minmax(0, 316px)); }
+.card-grid.cols-3 { grid-template-columns: repeat(3, minmax(0, 316px)); }
+.card-grid + .card-grid { margin-top: 16px !important; }
+.card { display: flex; flex-direction: column; min-height: 232px; padding: 10px 12px 12px; background: #fff; border: 2px solid #5a556e; border-radius: 0 30px 0 30px; overflow: hidden; }
+.card > .b, .card > .row { margin-left: 0; }
+.card > .card-center { align-self: center; }
+.card > .card-action { align-self: center; margin-top: auto; padding-top: 10px; }
+.card .btn { min-width: 100px; }
+.card > .card-note { align-self: stretch; }
+.card .row .rt a { white-space: nowrap; }
+@media (max-width: 760px) {
+  .card-grid.cols-2, .card-grid.cols-3 { grid-template-columns: minmax(0, 1fr); }
+}
