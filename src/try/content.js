@@ -36,10 +36,3 @@ export const links = [
   ['University of Luxembourg', 'https://wwwen.uni.lu/research/fhse/desw/people/luc_nijs'],
   ['Ghent University', 'https://research.flw.ugent.be/en/luc.nijs'],
 ];
-
-export const portrait = '/images/dce4d3_b9a3dd7c68cb4f14a42e101115f0f7f3.jpg';
-export const photos = [
-  ['/images/dce4d3_6972dfa2df394b43a7270dcfec62f9de.jpeg', 'Gentse Feesten'],
-  ['/images/dce4d3_0d3aef317ed549f788341e9a6b3e68ca.jpeg', 'Motion capture'],
-  ['/images/dce4d3_57ee66c3390c4c0bb75eb841c06c3565.jpeg', 'Bretagne'],
-];
