@@ -1,0 +1,85 @@
+---
+import Switch from '../../try/Switch.astro';
+import { nav, lead, intro, news, lectures, links, portrait, photos } from '../../try/content.js';
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>Option A: Editorial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+<style is:global>
+  :root { --paper: #f7f4ee; --ink: #1f1c2c; --soft: #625e70; --line: #d9d4c8; --mark: #8a8c1f; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 19px/1.55 Newsreader, Georgia, serif; }
+  a { color: inherit; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  img { display: block; width: 100%; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 32px; }
+  header.top { display: flex; flex-wrap: wrap; gap: 8px 32px; align-items: baseline; justify-content: space-between; padding-block: 26px; border-bottom: 1px solid var(--line); }
+  .name { font-size: 25px; font-style: italic; text-decoration: none; }
+  .menu { display: flex; flex-wrap: wrap; gap: 4px 20px; font: 400 13.5px Inter, sans-serif; }
+  .menu a { text-decoration: none; color: var(--soft); }
+  .menu a:hover { color: var(--ink); }
+  .hero { display: grid; grid-template-columns: 1.55fr 1fr; gap: 72px; padding-block: 72px 80px; align-items: start; }
+  .kicker { margin: 0 0 22px; font: 500 12.5px Inter, sans-serif; letter-spacing: .09em; text-transform: uppercase; color: var(--mark); }
+  h1 { margin: 0 0 34px; font-size: clamp(36px, 4.7vw, 58px); line-height: 1.07; font-weight: 300; letter-spacing: -.015em; }
+  .intro p { margin: 0 0 16px; max-width: 34em; }
+  .more { font: 500 14px Inter, sans-serif; }
+  figure { margin: 0; }
+  figcaption { margin-top: 8px; font: 400 12.5px Inter, sans-serif; color: var(--soft); }
+  .hero img { aspect-ratio: 4/5; object-fit: cover; object-position: 50% 12%; }
+  .cols { display: grid; grid-template-columns: 1fr 1.9fr; gap: 72px; padding-block: 56px 72px; border-top: 1px solid var(--ink); }
+  h2 { margin: 0 0 24px; font: 500 12.5px Inter, sans-serif; letter-spacing: .09em; text-transform: uppercase; }
+  .news p { margin: 0 0 20px; font-size: 18px; line-height: 1.45; }
+  ol.talks { margin: 0; padding: 0; list-style: none; }
+  .talks li { display: grid; grid-template-columns: 112px 1fr; gap: 20px; padding: 13px 0; border-top: 1px solid var(--line); font-size: 18px; line-height: 1.35; }
+  .talks li:first-child { border-top: 0; padding-top: 0; }
+  .talks time { font: 400 12.5px/1.9 Inter, sans-serif; color: var(--soft); }
+  .talks small { display: block; margin-top: 3px; font: 400 12.5px Inter, sans-serif; color: var(--soft); }
+  .strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding-bottom: 72px; }
+  .strip img { aspect-ratio: 4/3; object-fit: cover; object-position: 50% 25%; }
+  footer.wrap { display: flex; flex-wrap: wrap; gap: 8px 28px; justify-content: space-between; padding-block: 26px 70px; border-top: 1px solid var(--line); font: 400 13px Inter, sans-serif; color: var(--soft); }
+  @media (max-width: 800px) {
+    .wrap { padding: 0 20px; }
+    .hero, .cols { grid-template-columns: 1fr; gap: 36px; padding-block: 44px; }
+    .hero figure { order: -1; max-width: 300px; }
+    .talks li { grid-template-columns: 1fr; gap: 2px; }
+    .strip { grid-template-columns: 1fr 1fr; }
+    .strip figure:last-child { display: none; }
+  }
+</style>
+</head>
+<body>
+  <header class="top wrap">
+    <a class="name" href="/try/a">Luc Nijs</a>
+    <nav class="menu">{nav.map(([l, h]) => <a href={h}>{l}</a>)}</nav>
+  </header>
+  <main class="wrap">
+    <section class="hero">
+      <div>
+        <p class="kicker">Researcher · Educator · Musician</p>
+        <h1>{lead}</h1>
+        <div class="intro">{intro.map((p) => <p set:html={p} />)}</div>
+        <a class="more" href="/aboutlucnijs">Read more about me →</a>
+      </div>
+      <figure><img src={portrait} alt="Luc Nijs holding a clarinet" /></figure>
+    </section>
+    <section class="cols">
+      <div class="news"><h2>News</h2>{news.map((n) => <p set:html={n} />)}</div>
+      <div>
+        <h2>Invited lectures</h2>
+        <ol class="talks">{lectures.map(([d, t, w]) => <li><time>{d}</time><span>{t}<small>{w}</small></span></li>)}</ol>
+        <p><a class="more" href="/agenda">See all lectures and workshops →</a></p>
+      </div>
+    </section>
+    <section class="strip">{photos.map(([s, c]) => <figure><img src={s} alt={c} loading="lazy" /><figcaption>{c}</figcaption></figure>)}</section>
+  </main>
+  <footer class="wrap">
+    <span>© 2024 by Luc Nijs</span>
+    <span>{links.map(([l, h], i) => <>{i > 0 && ' · '}<a href={h} target="_blank" rel="noopener">{l}</a></>)}</span>
+  </footer>
+  <Switch at="A" />
+</body>
+</html>

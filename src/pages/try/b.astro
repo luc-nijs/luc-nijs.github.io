@@ -1,0 +1,96 @@
+---
+import Switch from '../../try/Switch.astro';
+import { nav, lead, intro, news, lectures, links, portrait, photos } from '../../try/content.js';
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>Option B: Dark</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet" />
+<style is:global>
+  :root { --bg: #131316; --panel: #1c1c21; --text: #ecebe6; --soft: #a3a2a8; --line: #2e2e35; --lime: #cdd14a; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 400 17px/1.6 Figtree, system-ui, sans-serif; }
+  a { color: inherit; text-underline-offset: 3px; }
+  a:hover { color: var(--lime); }
+  img { display: block; width: 100%; }
+  strong { font-weight: 600; color: #fff; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 36px; }
+  header.top { position: absolute; inset: 0 0 auto; z-index: 3; display: flex; flex-wrap: wrap; gap: 8px 32px; justify-content: space-between; align-items: baseline; padding-block: 26px; }
+  .name { font: italic 300 26px Fraunces, serif; text-decoration: none; }
+  .menu { display: flex; flex-wrap: wrap; gap: 4px 20px; font-size: 14px; color: var(--soft); }
+  .menu a { text-decoration: none; }
+  .hero { position: relative; min-height: 700px; display: flex; align-items: flex-end; overflow: hidden; }
+  .hero img { position: absolute; top: 0; right: 0; width: 52%; height: 100%; object-fit: cover; object-position: 50% 12%; }
+  .hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(19, 19, 22, .82), transparent 16%), linear-gradient(90deg, var(--bg) 48%, rgba(19, 19, 22, .1) 72%, transparent), linear-gradient(0deg, var(--bg), transparent 26%); }
+  .hero .wrap { position: relative; z-index: 2; width: 100%; padding-block: 120px 56px; }
+  .kicker { margin: 0 0 20px; color: var(--lime); font-size: 13px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; }
+  h1 { max-width: 13.5em; margin: 0; font: 300 clamp(36px, 4.6vw, 60px)/1.08 Fraunces, serif; letter-spacing: -.015em; }
+  .about { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; padding-block: 44px 72px; color: #d2d1cc; font-size: 16px; }
+  .about p { margin: 0; }
+  .more { display: inline-block; margin-top: 16px; color: var(--lime); font-weight: 500; font-size: 15px; text-decoration: none; }
+  .panels { display: grid; grid-template-columns: 1fr 1.8fr; gap: 16px; }
+  .panel { padding: 34px 36px; background: var(--panel); border-radius: 4px; }
+  h2 { margin: 0 0 22px; font: 300 27px Fraunces, serif; }
+  .news p { margin: 0 0 18px; font-size: 16px; line-height: 1.5; color: #d2d1cc; }
+  ol.talks { margin: 0; padding: 0; list-style: none; }
+  .talks li { display: grid; grid-template-columns: 112px 1fr; gap: 20px; padding: 12px 0; border-top: 1px solid var(--line); font-size: 15.5px; line-height: 1.4; }
+  .talks time { color: var(--lime); font-size: 13px; line-height: 1.7; font-variant-numeric: tabular-nums; }
+  .talks small { display: block; margin-top: 2px; color: var(--soft); font-size: 13px; }
+  .strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding-block: 16px 72px; }
+  figure { position: relative; margin: 0; overflow: hidden; border-radius: 4px; }
+  .strip img { aspect-ratio: 4/3; object-fit: cover; object-position: 50% 25%; filter: grayscale(1) contrast(1.05); transition: filter .3s; }
+  .strip figure:hover img { filter: none; }
+  figcaption { position: absolute; left: 12px; bottom: 10px; font-size: 13px; text-shadow: 0 1px 4px #000; }
+  footer.wrap { display: flex; flex-wrap: wrap; gap: 8px 28px; justify-content: space-between; padding-block: 26px 70px; border-top: 1px solid var(--line); color: var(--soft); font-size: 14px; }
+  @media (max-width: 860px) {
+    .wrap { padding: 0 20px; }
+    header.top { position: static; }
+    .hero { display: block; min-height: 0; }
+    .hero img { position: static; width: 100%; height: 400px; }
+    .hero::after { display: none; }
+    .hero .wrap { padding-block: 30px 20px; }
+    .about, .panels { grid-template-columns: 1fr; gap: 20px; }
+    .panel { padding: 26px 22px; }
+    .talks li { grid-template-columns: 1fr; gap: 2px; }
+    .strip { grid-template-columns: 1fr 1fr; }
+    .strip figure:last-child { display: none; }
+  }
+</style>
+</head>
+<body>
+  <header class="top wrap">
+    <a class="name" href="/try/b">Luc Nijs</a>
+    <nav class="menu">{nav.map(([l, h]) => <a href={h}>{l}</a>)}</nav>
+  </header>
+  <section class="hero">
+    <img src={portrait} alt="Luc Nijs holding a clarinet" />
+    <div class="wrap">
+      <p class="kicker">Researcher · Educator · Musician</p>
+      <h1>{lead}</h1>
+    </div>
+  </section>
+  <main class="wrap">
+    <section class="about">
+      {intro.map((p) => <p set:html={p} />)}
+    </section>
+    <section class="panels">
+      <div class="panel news"><h2>News</h2>{news.map((n) => <p set:html={n} />)}<a class="more" href="/aboutlucnijs">More about me →</a></div>
+      <div class="panel">
+        <h2>Invited lectures</h2>
+        <ol class="talks">{lectures.map(([d, t, w]) => <li><time>{d}</time><span>{t}<small>{w}</small></span></li>)}</ol>
+        <a class="more" href="/agenda">See all lectures and workshops →</a>
+      </div>
+    </section>
+    <section class="strip">{photos.map(([s, c]) => <figure><img src={s} alt={c} loading="lazy" /><figcaption>{c}</figcaption></figure>)}</section>
+  </main>
+  <footer class="wrap">
+    <span>© 2024 by Luc Nijs</span>
+    <span>{links.map(([l, h], i) => <>{i > 0 && ' · '}<a href={h} target="_blank" rel="noopener">{l}</a></>)}</span>
+  </footer>
+  <Switch at="B" />
+</body>
+</html>
