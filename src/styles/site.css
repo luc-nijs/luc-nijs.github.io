@@ -20,7 +20,7 @@ img, video, iframe { display: block; max-width: 100%; }
 a { color: var(--link); text-decoration: none; font-weight: 500; }
 a:hover { color: var(--link-hover); }
 strong { font-weight: 600; color: #fff; }
-a strong { color: inherit; }
+a strong, a [class*="c-"] { color: inherit; }
 
 /* Header and footer */
 .wrap { width: 100%; max-width: 1200px; margin: 0 auto; padding-inline: 36px; }
