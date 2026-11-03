@@ -83,3 +83,19 @@ hr { margin: 0; border: 0; border-top-style: solid; }
 @media (max-width: 760px) {
   .card-grid.cols-2, .card-grid.cols-3 { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* PhD student cards */
+.grey-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 403px)); gap: 46px; justify-content: center; margin-top: 32px; }
+.grey-grid.one { grid-template-columns: minmax(0, 403px); }
+.grey-card { display: flex; flex-direction: column; background: rgba(220, 220, 220, .8); }
+.grey-text { padding: 16px 31px 0; }
+.grey-text:last-child { padding-bottom: 22px; }
+.student-row { align-items: stretch; }
+.student-row > .col:first-child, .student-row > .col:first-child > .b { display: flex; flex-direction: column; flex: 1; }
+.student-card { flex: 1; }
+@media (max-width: 760px) {
+  .grey-grid { grid-template-columns: minmax(0, 1fr); }
+}
+.grey-photo img { width: 100%; height: auto; }
+.grey-grid:last-child { margin-bottom: 40px; }
+.student-card { padding-bottom: 14px; }
