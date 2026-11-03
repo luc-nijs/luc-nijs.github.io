@@ -12,6 +12,8 @@ export const nav = [
 
 export const lead = 'Movement-based approaches to instrumental music teaching and learning (in Early Childhood).';
 
+export const focus = 'I devote my time to the development of [research &amp; practice]-based innovative <strong>movement-based approaches to instrumental music teaching and learning (in Early Childhood)</strong>.';
+
 export const intro = [
   "I'm a <strong>musician</strong>, <strong>educator</strong> and <strong>researcher</strong>, affiliated as an Associate Professor in Early Childhood Music Education to the University of Luxemburg. I am also affiliated to IPEM at Ghent University, as a Visiting Professor. Previously, I was affiliated to IPEM (Ghent University) as a Ph.D. student and postdoc, and to the Royal Conservatoire Antwerp as a Ph.D. student in the arts.",
   'The leitmotiv in my work is the integration of theoretical, empirical and practical research. Importantly, my research is constantly inspired by my experience as performer and teacher.',
