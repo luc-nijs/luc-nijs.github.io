@@ -19,7 +19,7 @@ body > main { flex: 1; }
 img, video, iframe { display: block; max-width: 100%; }
 a { color: var(--link); text-decoration: none; font-weight: 500; }
 a:hover { color: var(--link-hover); }
-strong { font-weight: 600; color: #fff; }
+strong { font-weight: 400; color: var(--accent); }
 a strong, a [class*="c-"] { color: inherit; }
 
 /* Header and footer */
@@ -41,7 +41,7 @@ footer.wrap { display: flex; flex-wrap: wrap; gap: 8px 28px; justify-content: sp
 .rt p, .rt h1, .rt h2, .rt h3, .rt h4, .rt h5, .rt h6, .rt ul, .rt ol, .rt blockquote { margin: 0; font-weight: 400; overflow-wrap: anywhere; }
 .rt h1, .rt h2, .rt h3, .rt h4, .rt h5, .rt h6 { font-family: var(--head); line-height: 1.2; color: var(--text); }
 .rt h1 em, .rt h2 em, .rt h3 em, .rt h4 em, .rt h5 em, .rt h6 em { font-style: normal; }
-.rt h1 strong, .rt h2 strong, .rt h3 strong, .rt h4 strong, .rt h5 strong, .rt h6 strong { font-weight: 500; color: inherit; }
+.rt h1 strong, .rt h2 strong, .rt h3 strong, .rt h4 strong, .rt h5 strong, .rt h6 strong { font-weight: 400; color: var(--accent); }
 .rt ul, .rt ol { padding-left: 1.4em; }
 .b img, .box img, .card img { width: 100%; height: auto; }
 hr { margin: 0; border: 0; border-top: 2px solid var(--accent); }
