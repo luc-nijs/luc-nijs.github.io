@@ -29,5 +29,16 @@ const current = '/' + slug;
       <span>© 2026 by Luc Nijs</span>
       <span>{links.map(([label, href], i) => <>{i > 0 && ' · '}<a href={href} target="_blank" rel="noopener">{label}</a></>)}</span>
     </footer>
+    {import.meta.env.PROD && (
+      <Fragment>
+        <script is:inline>
+          var sc_project = 12731641;
+          var sc_invisible = 1;
+          var sc_security = 'c4ca1ab2';
+        </script>
+        <script is:inline src="https://www.statcounter.com/counter/counter.js" async></script>
+        <noscript><div><img src="https://c.statcounter.com/12731641/0/c4ca1ab2/1/" alt="" referrerpolicy="no-referrer-when-downgrade" /></div></noscript>
+      </Fragment>
+    )}
   </body>
 </html>
