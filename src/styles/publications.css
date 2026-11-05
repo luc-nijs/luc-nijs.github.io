@@ -1,0 +1,63 @@
+#pub-app {
+  --pb-ink: #d2d1cc;
+  --pb-muted: #a3a2a8;
+  --pb-line: #2e2e35;
+  --pb-bg: #131316;
+  --pb-accent: #a9c28c;
+  color-scheme: dark;
+  line-height: normal;
+  font-family: Manrope, sans-serif;
+  color: var(--pb-ink);
+  height: 815px;
+  display: flex; flex-direction: column;
+  padding: .5rem;
+}
+
+/* ---- control bar ---- */
+#pub-app .pb-controls {
+  flex: 0 0 auto;
+  display: flex; flex-wrap: wrap; gap: .4rem .9rem;
+  align-items: center; margin-bottom: .45rem; font-size: .85rem;
+}
+#pub-app .pb-controls label { color: var(--pb-muted); margin-right: .3rem; }
+#pub-app select,
+#pub-app input[type="search"] {
+  font: inherit; padding: .25rem .45rem;
+  border: 1px solid var(--pb-line); border-radius: 5px; background: var(--pb-bg);
+}
+#pub-app .pb-count { margin-left: auto; color: var(--pb-muted); }
+
+/* ---- the list ---- */
+#pub-list-pane {
+  flex: 1 1 auto; min-height: 0; overflow-y: auto; padding-right: .3rem;
+}
+#pub-app .pb-group {
+  position: sticky; top: 0; background: var(--pb-bg);
+  font-weight: 400; font-size: .95rem;
+  padding: .3rem 0 .2rem; border-bottom: 1px solid var(--pb-line);
+  margin: .9rem 0 .35rem; z-index: 2;
+}
+#pub-app .pb-group:first-child { margin-top: 0; }
+#pub-app .pb-group span { font-weight: 400; color: var(--pb-muted); font-size: .8rem; }
+
+#pub-app .pb-item {
+  padding: .34rem .4rem; border-radius: 5px;
+  font-size: .87rem; line-height: 1.5;
+  border-left: 3px solid transparent;
+}
+#pub-app .pb-item:hover { background: #1c1c21; border-left-color: var(--pb-accent); }
+#pub-app .pb-item .pb-t { font-weight: 400; }
+#pub-app .pb-item .pb-v { color: var(--pb-muted); font-style: italic; }
+#pub-app .pb-item a { color: var(--pb-accent); font-weight: 400; text-decoration: none; }
+#pub-app .pb-item a:hover { color: #6f9fd0; }
+#pub-app .pb-doi { font-size: .78rem; }
+#pub-app .pb-badge {
+  display: inline-block; font-size: .68rem; text-transform: uppercase;
+  letter-spacing: .03em; padding: .05rem .3rem; border-radius: 3px;
+  background: #1c1c21; color: var(--pb-muted); border: 1px solid var(--pb-line);
+  vertical-align: 1px; margin-left: .25rem; white-space: nowrap;
+}
+
+#pub-app .pb-status {
+  flex: 0 0 auto; padding: .3rem .2rem 0; font-size: .78rem; color: var(--pb-muted);
+}
