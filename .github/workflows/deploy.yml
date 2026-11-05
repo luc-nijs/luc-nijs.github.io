@@ -1,5 +1,5 @@
 # Builds the site and publishes it to GitHub Pages after every push to main,
-# and once a day so the publications list in the page stays up to date for search engines.
+# and once a day so the publications and agenda lists in the pages stay up to date for search engines.
 name: Publish site
 
 on:

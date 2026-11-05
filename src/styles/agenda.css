@@ -1,0 +1,120 @@
+
+#lecture-map-app {
+  --lm-ink:    #d2d1cc;
+  --lm-muted:  #a3a2a8;
+  --lm-line:   #2e2e35;
+  --lm-bg:     #131316;
+  --lm-accent: #a9c28c;
+  font-family: Manrope, sans-serif;
+  color: var(--lm-ink);
+  height: 475px;
+  color-scheme: dark;
+  line-height: normal;
+  display: flex; flex-direction: column;
+  padding: .5rem;
+}
+
+/* ---- shared control bar ---- */
+#lecture-map-app .lm-controls {
+  flex: 0 0 auto;
+  display: flex; flex-wrap: wrap; gap: .4rem .9rem;
+  align-items: center; margin-bottom: .45rem; font-size: .85rem;
+}
+#lecture-map-app .lm-controls label { color: var(--lm-muted); margin-right: .3rem; }
+#lecture-map-app select,
+#lecture-map-app input[type="search"] {
+  font: inherit; padding: .25rem .45rem;
+  border: 1px solid var(--lm-line); border-radius: 5px; background: var(--lm-bg);
+}
+#lecture-map-app .lm-count { margin-left: auto; color: var(--lm-muted); }
+
+/* ---- map beside list on wide frames, stacked on narrow ---- */
+#lecture-map-app .lm-split {
+  flex: 1 1 auto; min-height: 0;
+  display: flex; gap: .6rem;
+}
+#lecture-map {
+  flex: 1 1 58%; min-width: 0; min-height: 180px;
+  border: 1px solid var(--lm-line); border-radius: 8px;
+  background: #1c1c21;
+}
+#lm-list-pane {
+  flex: 1 1 42%; min-width: 0; min-height: 0;
+  overflow-y: auto; padding-right: .2rem;
+}
+@media (max-width: 760px) {
+  #lecture-map-app .lm-split { flex-direction: column; }
+  #lecture-map   { flex: 0 0 182px; }
+  #lm-list-pane  { flex: 1 1 auto; }
+}
+
+/* ---- the list ---- */
+#lecture-map-app .lm-year {
+  position: sticky; top: 0; background: var(--lm-bg);
+  font-weight: 400; font-size: .95rem;
+  padding: .3rem 0 .2rem; border-bottom: 1px solid var(--lm-line);
+  margin: .5rem 0 .3rem; z-index: 2;
+}
+#lecture-map-app .lm-year:first-child { margin-top: 0; }
+#lecture-map-app .lm-year span { font-weight: 400; color: var(--lm-muted); font-size: .8rem; }
+
+#lecture-map-app .lm-item {
+  padding: .32rem .4rem; border-radius: 5px; cursor: pointer;
+  font-size: .85rem; line-height: 1.4;
+  border-left: 3px solid transparent;
+}
+#lecture-map-app .lm-item:hover   { background: #1c1c21; }
+#lecture-map-app .lm-item.lm-on   { background: #232329; border-left-color: var(--lm-accent); }
+#lecture-map-app .lm-item .lm-t   { font-weight: 400; }
+#lecture-map-app .lm-item .lm-m   { color: var(--lm-muted); font-size: .78rem; }
+#lecture-map-app .lm-item a       { color: var(--lm-accent); }
+#lecture-map-app .lm-online {
+  color: var(--lm-muted); vertical-align: -1px; margin-left: .1rem; opacity: .8;
+}
+#lecture-map-app .lm-dot {
+  display: inline-block; width: .55rem; height: .55rem; border-radius: 50%;
+  margin-right: .35rem; vertical-align: baseline;
+  border: 1px solid rgba(0,0,0,.3);
+}
+
+#lecture-map-app .lm-status {
+  flex: 0 0 auto; padding: .3rem .2rem 0; font-size: .78rem; color: var(--lm-muted);
+}
+#lecture-map-app .lm-status.lm-error { color: #e0a0a0; }
+
+/* popup + legend */
+#lecture-map-app .lm-pop { font-size: .85rem; line-height: 1.45; max-width: 16rem; }
+#lecture-map-app .lm-pop h4 { margin: 0 0 .2rem; font-size: .9rem; }
+#lecture-map-app .lm-pop .lm-place { color: var(--lm-muted); }
+#lecture-map-app .lm-pop ul { margin: .35rem 0 0; padding-left: 1.05rem; }
+#lecture-map-app .lm-pop li { margin-bottom: .3rem; }
+#lecture-map-app .lm-legend {
+  background: rgba(28,28,33,.92); color: #d2d1cc; padding: .4rem .55rem;
+  border-radius: 6px; font-size: .75rem; line-height: 1.55;
+  box-shadow: 0 1px 4px rgba(0,0,0,.2);
+}
+#lecture-map-app .lm-legend i {
+  display: inline-block; width: .65rem; height: .65rem; border-radius: 50%;
+  margin-right: .35rem; vertical-align: middle; border: 1px solid rgba(0,0,0,.35);
+}
+
+/* Leaflet expects the browser's default box sizing */
+#lecture-map, #lecture-map * { box-sizing: content-box; }
+#lecture-map { isolation: isolate; }
+
+#lecture-map-app a { font-weight: 400; text-decoration: none; }
+#lecture-map-app a:hover { color: #6f9fd0; }
+
+/* dark map and controls */
+.leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) grayscale(.55) brightness(.8) contrast(.9)}
+.leaflet-bar a.leaflet-disabled{background:#1c1c21;color:#5a5a62}
+.leaflet-popup-content-wrapper,.leaflet-popup-tip{background:#1c1c21;color:#d2d1cc}
+.leaflet-bar a,.leaflet-bar a:hover{background:#1c1c21;color:#d2d1cc;border-color:#2e2e35}
+.leaflet-container .leaflet-control-attribution{background:rgba(19,19,22,.8);color:#a3a2a8}
+.leaflet-container .leaflet-control-attribution a{color:#8fb6dc}
+.marker-cluster,.marker-cluster div{background:rgba(143,182,220,.55);color:#131316}
+
+/* phones: taller, so the list has room to scroll */
+@media (max-width: 760px) {
+  #lecture-map-app { height: 570px; }
+}

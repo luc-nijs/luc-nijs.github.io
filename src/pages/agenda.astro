@@ -1,8 +1,52 @@
 ---
 import Base from '../layouts/Base.astro';
+import '../styles/agenda.css';
+import { SHEET_CSV_URL, recordsFromCSV, prepare, listHtml, countText } from '../lib/lectures.js';
+import snapshot from '../data/lectures-snapshot.json';
+
+// The list is written into the page when the site is built, so search engines
+// can read it. The browser then refreshes it from the sheet for every visitor.
+// If the sheet can't be read during a build, the saved copy keeps the page full.
+let source = snapshot;
+try {
+  const res = await fetch(SHEET_CSV_URL, { signal: AbortSignal.timeout(20000) });
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+  const fromSheet = recordsFromCSV(await res.text());
+  if (!fromSheet.length) throw new Error('no usable rows');
+  source = fromSheet;
+} catch (err) {
+  console.warn('[agenda] Using the saved copy: the sheet could not be read.', err);
+}
+const records = prepare(source);
+const dataJson = JSON.stringify(records).replace(/</g, '\\u003c');
 ---
 <Base title={"Agenda: Lectures and Workshops | Luc Nijs"} description={"Lectures, workshops and presentations given by Luc Nijs since 2009, listed by year and shown on a world map."} slug="agenda" heading={"Agenda: lectures and workshops"}>
+<Fragment slot="head">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+</Fragment>
 <section style="padding:30px 16px 30px"><div class="inner" style="max-width:980px">
-<div class="b" style="margin-left:1.02%;width:97.86%"><iframe class="embed agenda-embed" src="/embeds/lectures-map.html" title="lectures-map" style="height:475px" loading="lazy"></iframe></div>
+<div class="b" style="margin-left:1.02%;width:97.86%">
+<div id="lecture-map-app">
+  <div class="lm-controls">
+    <span><label for="lm-kind">Type</label><select id="lm-kind"><option value="">all</option></select></span>
+    <span><label for="lm-from">From</label><select id="lm-from"></select>
+      <label for="lm-to" style="margin-left:.4rem">to</label><select id="lm-to"></select></span>
+    <span><input type="search" id="lm-q" placeholder="city, title…" size="18"></span>
+    <span class="lm-count" id="lm-count">{countText(records)}</span>
+  </div>
+  <div class="lm-split">
+    <div id="lecture-map"></div>
+    <div id="lm-list-pane"><div id="lm-list" set:html={listHtml(records, records)}></div></div>
+  </div>
+  <div class="lm-status" id="lm-status"></div>
+</div>
+</div>
 </div></section>
+<script id="lm-data" type="application/json" set:html={dataJson}></script>
+<script is:inline src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script is:inline src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 </Base>
+
+<script src="../scripts/agenda.js"></script>
