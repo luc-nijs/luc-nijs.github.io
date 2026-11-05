@@ -14,7 +14,11 @@
 .home .panels { display: grid; grid-template-columns: 1fr 1.8fr; gap: 16px; }
 .home .panel { padding: 34px 36px; background: var(--panel); border-radius: 4px; }
 .home h2 { margin: 0 0 22px; font: 400 26px var(--head); color: var(--text); }
-.home .news p { margin: 0 0 18px; font-size: 16px; line-height: 1.5; color: var(--copy); }
+.home .news p { margin: 0; font-size: 16px; line-height: 1.5; color: var(--copy); }
+.home .news-item + .news-item { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--line); }
+/* Every picture gets the same height and stays whole. The panel is narrow, so it sits under the text. */
+.home .news-picture { width: auto; height: 100px; max-width: 100%; margin-top: 12px; object-fit: contain; }
+.home .panels:has(.news[hidden]) { grid-template-columns: 1fr; }
 .home ol.talks { margin: 0; padding: 0; list-style: none; }
 .home .talks li { display: grid; grid-template-columns: 112px 1fr; gap: 20px; padding: 12px 0; border-top: 1px solid var(--line); color: var(--text); font-size: 15.5px; line-height: 1.4; }
 .home .talks li.talks-note { display: block; color: var(--soft); }

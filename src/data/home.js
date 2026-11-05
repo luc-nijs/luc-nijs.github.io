@@ -17,11 +17,6 @@ export const intro = [
   'Next to my work as an academic, I am a guest lecturer at different conservatoires. I play the clarinet in a balkan/klezmer band with some of my friends, the Holy7.',
 ];
 
-export const news = [
-  'Our project <strong>AMUSAR</strong>, “Augmented MUsic Skill Acquisition in Rhythm” has been approved for funding by the Institute for Advanced Studies (IAS) at the University of Luxembourg. <a href="https://www.uni.lu/fhse-en/research-projects/amusar/" target="_blank" rel="noopener">See here</a>',
-  'Our project <strong>Music4 Resilience</strong> has been accepted for funding by the Losch Foundation in Luxembourg. Collaboration with Potheini Vaioulli',
-];
-
 export const links = [
   ['University of Luxembourg', 'https://wwwen.uni.lu/research/fhse/desw/people/luc_nijs'],
   ['Ghent University', 'https://research.flw.ugent.be/en/luc.nijs'],

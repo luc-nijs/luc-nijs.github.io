@@ -102,7 +102,7 @@ export function countText(recs) {
 
 // Minimal RFC-4180 CSV reader: handles quoted fields, escaped "" quotes,
 // and commas or newlines inside quotes. Sheets exports all three.
-function parseCSV(text) {
+export function parseCSV(text) {
   const rows = [];
   let row = [], field = '', inQuotes = false;
   for (let i = 0; i < text.length; i++) {

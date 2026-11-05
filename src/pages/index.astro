@@ -3,7 +3,23 @@ import Base from '../layouts/Base.astro';
 import HeroPhotos from '../components/HeroPhotos.astro';
 import '../styles/home.css';
 import UpcomingLectures from '../components/UpcomingLectures.astro';
-import { focus, intro, news } from '../data/home.js';
+import { focus, intro } from '../data/home.js';
+import { SHEET_CSV_URL, recordsFromCSV, current, newsHtml } from '../lib/news.js';
+import snapshot from '../data/news-snapshot.json';
+
+// The news is written into the page when the site is built, so search engines
+// can read it. The browser then refreshes it from the sheet for every visitor.
+// If the sheet can't be read during a build, the saved copy keeps the news there.
+let records = snapshot;
+try {
+  const res = await fetch(SHEET_CSV_URL, { signal: AbortSignal.timeout(20000) });
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+  records = recordsFromCSV(await res.text());
+} catch (err) {
+  console.warn('[news] Using the saved copy: the sheet could not be read.', err);
+}
+const shown = current(records);
+const dataJson = JSON.stringify(records).replace(/</g, '\\u003c');
 ---
 <Base title={"Luc Nijs | Music Education Researcher, Educator and Musician"} description={"Luc Nijs is Associate Professor in Early Childhood Music Education at the University of Luxembourg, researching movement-based instrumental music learning."} slug="">
 <div class="home">
@@ -20,7 +36,7 @@ import { focus, intro, news } from '../data/home.js';
       <div><p set:html={intro[1]} /><p set:html={intro[2]} /><a class="more" href="/aboutlucnijs">More about me<span class="go" aria-hidden="true"></span></a></div>
     </section>
     <section class="panels">
-      <div class="panel news"><h2>News</h2>{news.map((n) => <p set:html={n} />)}</div>
+      <div class="panel news" id="news" hidden={!shown.length}><h2>News</h2><div id="news-list" set:html={newsHtml(shown)}></div></div>
       <div class="panel">
         <h2>Upcoming lectures</h2>
         <UpcomingLectures />
@@ -29,4 +45,26 @@ import { focus, intro, news } from '../data/home.js';
     </section>
   </div>
 </div>
+<script id="news-data" type="application/json" set:html={dataJson}></script>
 </Base>
+
+<script>
+  import { SHEET_CSV_URL, recordsFromCSV, current, newsHtml } from '../lib/news.js';
+
+  function show(records) {
+    const shown = current(records);
+    const list = document.getElementById('news-list');
+    // Redraw only when the news changed, so pictures already showing don't reload.
+    const fresh = document.createElement('div');
+    fresh.innerHTML = newsHtml(shown);
+    if (fresh.innerHTML !== list.innerHTML) list.innerHTML = fresh.innerHTML;
+    document.getElementById('news').hidden = !shown.length;
+  }
+
+  // Cache-bust per minute so a sheet edit is not masked by a stale copy.
+  fetch(SHEET_CSV_URL + '&v=' + Math.floor(Date.now() / 60000), { cache: 'no-cache' })
+    .then((res) => { if (!res.ok) throw new Error('HTTP ' + res.status); return res.text(); })
+    .then((text) => show(recordsFromCSV(text)))
+    // Sheet unreachable: keep the news built into the page, minus anything past its date.
+    .catch(() => show(JSON.parse(document.getElementById('news-data').textContent)));
+</script>
