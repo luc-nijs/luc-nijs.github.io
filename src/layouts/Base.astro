@@ -3,9 +3,24 @@ import '../styles/site.css';
 import '../styles/type.css';
 import { nav, links } from '../data/home.js';
 
-interface Props { title: string; description?: string; slug: string }
-const { title, description = '', slug } = Astro.props;
+interface Props { title: string; description?: string; slug: string; heading?: string; noindex?: boolean }
+const { title, description = '', slug, heading, noindex = false } = Astro.props;
 const current = '/' + slug;
+const site = Astro.site ?? 'https://www.lucnijs.be';
+const canonical = new URL(slug ? `/${slug}/` : '/', site).href;
+const ogImage = new URL('/images/og-luc-nijs.jpg', site).href;
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Luc Nijs',
+  url: new URL('/', site).href,
+  image: ogImage,
+  jobTitle: 'Associate Professor in Early Childhood Music Education',
+  worksFor: { '@type': 'CollegeOrUniversity', name: 'University of Luxembourg' },
+  affiliation: { '@type': 'CollegeOrUniversity', name: 'Ghent University' },
+  knowsAbout: ['Music education', 'Instrumental music teaching and learning', 'Embodied music learning', 'Music education technology'],
+  sameAs: [...links.map(([, href]) => href), 'https://orcid.org/0000-0002-7054-2660', 'https://scholar.google.com/citations?user=2TlHVCgAAAAJ'],
+};
 ---
 <!doctype html>
 <html lang="en">
@@ -14,6 +29,19 @@ const current = '/' + slug;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content={slug === 'aboutlucnijs' ? 'profile' : 'website'} />
+    <meta property="og:site_name" content="Luc Nijs" />
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Portrait of Luc Nijs smiling" />
+    <meta name="twitter:card" content="summary_large_image" />
+    {(slug === '' || slug === 'aboutlucnijs') && <script type="application/ld+json" set:html={JSON.stringify(person)} />}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Manrope:wght@300..700&display=swap" rel="stylesheet" />
   </head>
@@ -24,7 +52,7 @@ const current = '/' + slug;
         {nav.map(([label, href]) => <a href={href} class={current === href ? 'on' : ''}>{label}</a>)}
       </nav>
     </header>
-    <main><slot /></main>
+    <main>{heading && <h1 class="sr-only">{heading}</h1>}<slot /></main>
     <footer class="wrap">
       <span>© 2026 by Luc Nijs</span>
       <span>{links.map(([label, href], i) => <>{i > 0 && ' · '}<a href={href} target="_blank" rel="noopener">{label}</a></>)}</span>
