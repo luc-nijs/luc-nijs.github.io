@@ -6,3 +6,13 @@ import Base from '../layouts/Base.astro';
 <div class="b" style="margin-left:2.96%;width:93.98%"><iframe class="embed" src="/embeds/cv-at-a-glance.html" title="cv-at-a-glance" style="height:2229px" loading="lazy"></iframe></div>
 </div></section>
 </Base>
+
+<script>
+  // The graphs take more height on narrow screens, so the frame follows its content.
+  const frame = document.querySelector('iframe.embed') as HTMLIFrameElement;
+  const fit = () => { frame.style.height = frame.contentDocument!.body.offsetHeight + 'px'; };
+  frame.addEventListener('load', () => {
+    fit();
+    new ResizeObserver(fit).observe(frame.contentDocument!.body);
+  });
+</script>
