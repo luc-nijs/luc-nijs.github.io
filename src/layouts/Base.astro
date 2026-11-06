@@ -8,7 +8,7 @@ const { title, description = '', slug, heading, noindex = false } = Astro.props;
 const current = '/' + slug;
 const site = Astro.site ?? 'https://www.lucnijs.be';
 const canonical = new URL(slug ? `/${slug}/` : '/', site).href;
-const ogImage = new URL('/images/og-luc-nijs.jpg', site).href;
+const ogImage = new URL('/images/og-luc-nijs-v2.jpg', site).href;
 const person = {
   '@context': 'https://schema.org',
   '@type': 'Person',
