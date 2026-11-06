@@ -8,13 +8,13 @@ const { title, description = '', slug, heading, noindex = false } = Astro.props;
 const current = '/' + slug;
 const site = Astro.site ?? 'https://www.lucnijs.be';
 const canonical = new URL(slug ? `/${slug}/` : '/', site).href;
-const ogImage = new URL('/images/og-luc-nijs-v2.jpg', site).href;
+const ogImage = new URL('/images/og-home.jpg', site).href;
 const person = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: 'Luc Nijs',
   url: new URL('/', site).href,
-  image: ogImage,
+  image: new URL('/images/dce4d3_b9a3dd7c68cb4f14a42e101115f0f7f3.jpg', site).href,
   jobTitle: 'Associate Professor in Early Childhood Music Education',
   worksFor: { '@type': 'CollegeOrUniversity', name: 'University of Luxembourg' },
   affiliation: { '@type': 'CollegeOrUniversity', name: 'Ghent University' },
@@ -39,7 +39,7 @@ const person = {
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Portrait of Luc Nijs smiling" />
+    <meta property="og:image:alt" content="The home page of Luc Nijs: researcher, educator, musician" />
     <meta name="twitter:card" content="summary_large_image" />
     {(slug === '' || slug === 'aboutlucnijs') && <script type="application/ld+json" set:html={JSON.stringify(person)} />}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
