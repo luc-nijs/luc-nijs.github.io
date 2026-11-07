@@ -9,16 +9,20 @@ const projects = [
   { title: 'CC-ECME: Co-Connecting Early Childhood Music Education', img: '/images/funded-ccecme.jpg', alt: 'CC-ECME logo', href: 'https://www.uni.lu/fhse-en/research-projects/co-connecting-early-childhood-music-education-towards-systems-thinking-in-european-music-institutions/', logo: true },
   { title: 'EEEP: Enhancing Performance and Daily Life through Movement', img: '/images/funded-eeep.jpg', alt: 'Musicians and dancers performing on a dark stage', href: 'https://www.uni.lu/fhse-en/research-projects/eeep/' },
   { title: 'AMusAR – Augmented Music Skill Acquisition in Rhythm', img: '/images/funded-amusar.jpg', alt: 'A boy with red glasses holding a drumstick', href: 'https://www.uni.lu/fhse-en/research-projects/amusar/' },
+  // Placeholder until the user sends an image and details.
+  { title: 'Music4Resilience', href: 'https://www.uni.lu/fhse-en/research-projects/music4resilience/' },
 ];
 ---
-<Base title={"Funded Research Projects | Luc Nijs"} description={"Funded research projects of Luc Nijs at the University of Luxembourg: SAMuSE, MuTechLab, CC-ECME, EEEP and AMusAR."} slug="funded">
+<Base title={"Funded Research Projects | Luc Nijs"} description={"Funded research projects of Luc Nijs at the University of Luxembourg: SAMuSE, MuTechLab, CC-ECME, EEEP, AMusAR and Music4Resilience."} slug="funded">
 <section style="padding:47px 16px 19px"><div class="inner" style="max-width:980px">
 <div class="b" style="margin-left:12.5%;width:75%"><div class="rt"><h1 class="fs-28 c-27223e ta-center">FUNDED RESEARCH PROJECTS</h1></div></div>
 <div class="b" style="margin-left:44.39%;width:11.84%;margin-top:9px"><hr></div>
 <div class="card-grid cols-3" style="margin-top:46px">
   {projects.map((p) => (
     <a class="card fund-card" href={p.href} target="_blank" rel="noopener">
-      <span class:list={['fund-img', { logo: p.logo }]}><img src={p.img} alt={p.alt} loading="lazy" /></span>
+      {p.img
+        ? <span class:list={['fund-img', { logo: p.logo }]}><img src={p.img} alt={p.alt} loading="lazy" /></span>
+        : <span class="fund-img empty" aria-hidden="true">{p.title}</span>}
       <h2>{p.title}</h2>
       <span class="fund-more">Learn more ›</span>
     </a>
