@@ -7,11 +7,12 @@
   --lm-accent: #a9c28c;
   font-family: Manrope, sans-serif;
   color: var(--lm-ink);
-  height: 475px;
+  /* Fill the window down to the footer, so no empty band is left under the map and list */
+  height: max(475px, calc(100vh - 304px));
   color-scheme: dark;
   line-height: normal;
   display: flex; flex-direction: column;
-  padding: .5rem;
+  padding: .5rem 0;
 }
 
 /* ---- shared control bar ---- */
