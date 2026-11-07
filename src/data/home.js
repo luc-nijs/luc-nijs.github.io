@@ -2,7 +2,7 @@ export const nav = [
   ['About', '/aboutlucnijs'],
   ['Publications', '/lucnijspublications'],
   ['Lectures', '/lucnijslectures'],
-  ['Research', '/lucnijsresearch'],
+  ['Research', '/lucnijsresearch', [['Funded', '/funded']]],
   ['PhD students', '/phd-students'],
   ['Teaching', '/lucnijsteaching'],
   ['Agenda', '/agenda'],

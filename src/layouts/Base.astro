@@ -50,7 +50,12 @@ const person = {
     <header class="top wrap">
       {slug !== '' && <a class="name" href="/">Luc Nijs</a>}
       <nav class="menu" aria-label="Main">
-        {nav.map(([label, href]) => <a href={href} class={current === href ? 'on' : ''}>{label}</a>)}
+        {nav.map(([label, href, sub]) => sub
+          ? <div class="has-sub">
+              <a href={href} class={current === href || sub.some(([, h]) => h === current) ? 'on' : ''}>{label}</a>
+              <div class="sub">{sub.map(([l, h]) => <a href={h} class={current === h ? 'on' : ''}>{l}</a>)}</div>
+            </div>
+          : <a href={href} class={current === href ? 'on' : ''}>{label}</a>)}
       </nav>
     </header>
     <main>{heading && <h1 class="sr-only">{heading}</h1>}<slot /></main>
