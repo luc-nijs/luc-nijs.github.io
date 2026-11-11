@@ -1,0 +1,205 @@
+---
+// Topic Map: an interactive version of the research map, linked from the
+// publications page (not from the menu). Every citation shows its full
+// reference from the publications sheet on hover, tap or keyboard focus.
+// Which citation matches which sheet row is set in src/data/topic-map.js.
+import Base from '../layouts/Base.astro';
+import '../styles/topic-map.css';
+import { SHEET_CSV_URL, recordsFromCSV } from '../lib/publications.js';
+import { matchRefs } from '../data/topic-map.js';
+import snapshot from '../data/publications-snapshot.json';
+
+let records = snapshot;
+try {
+  const res = await fetch(SHEET_CSV_URL, { signal: AbortSignal.timeout(20000) });
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+  const fromSheet = recordsFromCSV(await res.text());
+  if (!fromSheet.length) throw new Error('no usable rows');
+  records = fromSheet;
+} catch (err) {
+  console.warn('[topic-map] Using the saved copy: the sheet could not be read.', err);
+}
+const matched = matchRefs(records);
+const missing = Object.keys(matched).filter((k) => !matched[k].length);
+if (missing.length) console.warn('[topic-map] No sheet row found for: ' + missing.join(', '));
+const refsJson = JSON.stringify(matched).replace(/</g, '\\u003c');
+---
+<Base title={"Topic Map | Luc Nijs"} description={"How the publications of Luc Nijs connect: the musician–instrument relationship, embodiment, dynamical systems and creativity, applied in instrumental, general and social music education."} slug="topic-map" heading={"Topic Map"}>
+<section style="padding:9px 16px 40px"><div class="inner" style="max-width:1180px">
+<div id="tmap">
+  <a class="tm-back" href="/lucnijspublications/">← Back to publications</a>
+  <p class="tm-intro">My research concerns the relationship between musicians and their instruments: how an instrument comes to be experienced as part of the body, and how learning shapes that relationship. The map shows how my publications connect. Point at a citation, or tap it, to see the full reference.</p>
+
+  <!-- core -->
+  <div class="tm-box tm-core" id="tm-core">
+    <span class="tm-eyebrow">The core</span>
+    <h2>The musician–instrument relationship</h2>
+    <p class="tm-lead">A skilled musician experiences the instrument as an extension of the body. This work examines how that incorporation comes about and how it can be described and measured.</p>
+    <p class="tm-refs"> <button type="button" class="cite" data-k="natext">Nijs, Lesaffre &amp; Leman 2009/2013</button> (activity theory, ecological psychology and optimal experience) · <button type="button" class="cite" data-k="mediality">Nijs et al. 2010</button> (mediality) · <button type="button" class="cite" data-k="merging">Nijs 2017</button> (levels of embodiment) · <button type="button" class="cite" data-k="indicators">Serra Marin et al. 2026</button> (embodiment indicators of skill acquisition)
+    </p>
+  </div>
+
+  <div class="tm-fan" aria-hidden="true"><i class="v c2 top"></i><i class="h"></i><i class="v c1 bot"></i><i class="v c2 bot"></i><i class="v c3 bot"></i></div>
+
+  <!-- theoretical perspectives -->
+  <div class="tm-row">
+    <div class="tm-box tm-persp">
+      <span class="tm-eyebrow">Perspective 1</span>
+      <h3>Embodiment</h3>
+      <p class="tm-lead">Musical meaning arises from bodily interaction with music, in which perception and action are coupled. For the instrumentalist, the instrument mediates that coupling.</p>
+      <p class="tm-refs"> <button type="button" class="cite" data-k="leman2010">Leman et al. 2010</button> (user-oriented methods in embodied music cognition) · <button type="button" class="cite" data-k="leman2018">Leman, Nijs, Maes &amp; Van Dyck 2018</button> (foundations of embodied music cognition) · <button type="button" class="cite" data-k="maes2018">Maes, Nijs &amp; Leman 2018</button> (a definition of embodiment) · <button type="button" class="cite" data-k="grinspun2020">Grinspun et al. 2020</button> (audiation and executive functions)
+      </p>
+    </div>
+    <div class="tm-box tm-persp">
+      <span class="tm-eyebrow">Perspective 2</span>
+      <h3>Dynamical systems</h3>
+      <p class="tm-lead">Performance and learning as the self-organising interaction of body, instrument, music, teacher and environment, which in teaching supports a non-linear pedagogy.</p>
+      <p class="tm-refs"> <button type="button" class="cite" data-k="bremmer2020">Bremmer &amp; Nijs 2020</button> (the teacher’s bodily engagement) · <button type="button" class="cite" data-k="bremmer2022">Bremmer &amp; Nijs 2022</button> (the dynamic role of the body in music pedagogy) · <button type="button" class="cite" data-k="dynsys2023">Nijs, Bremmer, Van der Schyff &amp; Schiavio 2023</button> (performance as a dynamical system) · <button type="button" class="cite" data-k="affnav2026">Nijs &amp; Bremmer 2026</button> (non-linear pedagogy)
+      </p>
+    </div>
+    <div class="tm-box tm-persp">
+      <span class="tm-eyebrow">Perspective 3</span>
+      <h3>Creativity as affordance navigation</h3>
+      <p class="tm-lead">Creativity as the exploration of affordances: the possibilities for action that an instrument and a piece of music offer to a moving musician.</p>
+      <p class="tm-refs"> <button type="button" class="cite" data-k="afflandscape">Nijs, Grinspun &amp; Fortuna 2024</button> (the musical affordance landscape) · <button type="button" class="cite" data-k="affnav2026">Nijs &amp; Bremmer 2026</button> (embodied affordance navigation)
+      </p>
+    </div>
+  </div>
+
+  <div class="tm-fan" aria-hidden="true"><i class="v c1 top"></i><i class="v c2 top"></i><i class="v c3 top"></i><i class="h"></i><i class="v c2 bot"></i></div>
+
+  <!-- shared ground -->
+  <div class="tm-box tm-shared">
+    <span class="tm-eyebrow">Shared ground</span>
+    <h3>Embodied music learning</h3>
+    <p>people come to understand music through bodily engagement with it, in three settings</p>
+  </div>
+
+  <!-- domains of application -->
+  <div class="tm-row tm-domains">
+    <div class="tm-box tm-domain">
+      <span class="tm-eyebrow">Domain A · Instrumental</span>
+      <h3>Embodied and creative instrumental pedagogy</h3>
+      <p class="tm-lead">Learning to play through movement, and making room for creativity in the instrumental lesson.</p>
+      <p class="tm-refs"><b>Kinemusical approach:</b> <button type="button" class="cite" data-k="moving2019">Nijs 2019</button> (moving together while playing) · <button type="button" class="cite" data-k="kinemusical">Nijs 2024</button>, <i>Bewegend leren musiceren</i> (the kinemusical approach) · <button type="button" class="cite" data-k="bremmer2024">Bremmer &amp; Nijs 2024</button> (embodiment in music education) · <button type="button" class="cite" data-k="wellbeing2025">Nijs 2025</button> (well-being and musicianship)
+      </p>
+      <p class="tm-refs"><b>Creativity in instrumental teaching:</b> <button type="button" class="cite" data-k="schiavio2022">Schiavio &amp; Nijs 2022</button> (creativity through interaction and bodily movement in a remote course) · <button type="button" class="cite" data-k="stijnen2023">Stijnen, Nijs &amp; Van Petegem 2023</button> (interpretation as creativity: teachers’ beliefs) · <button type="button" class="cite" data-k="verneert2024">Verneert et al. 2024</button> (community music strategies for formal education) · <button type="button" class="cite" data-k="stijnen2026">Stijnen, Verneert, Nijs &amp; Van Petegem 2026</button> (flow and task constraints in improvisation)
+      </p>
+    </div>
+    <div class="tm-box tm-domain">
+      <span class="tm-eyebrow">Domain B · General</span>
+      <h3>Embodied general music education</h3>
+      <p class="tm-lead">How children, from early childhood on, make sense of music through the body.</p>
+      <p class="tm-refs"> <button type="button" class="cite" data-k="early2019">Nijs &amp; Bremmer 2019</button> (embodiment in early childhood music education) · <button type="button" class="cite" data-k="fortuna2019">Fortuna &amp; Nijs 2019</button> (verbal versus bodily interaction with music) · <button type="button" class="cite" data-k="fortuna2020">Fortuna &amp; Nijs 2020</button> (children’s explanations of their visual representations) · <button type="button" class="cite" data-k="fortuna2022">Fortuna &amp; Nijs 2022</button> (discrete versus continuous movement) · <button type="button" class="cite" data-k="fortuna2024">Fortuna &amp; Nijs 2024</button> (movement quality and musical sense-making)
+      </p>
+    </div>
+    <div class="tm-box tm-domain" id="tm-domain-c">
+      <span class="tm-eyebrow">Domain C · Social</span>
+      <h3>Social impact &amp; well-being</h3>
+      <p class="tm-lead">Music and movement as a basis for resilience, belonging and flourishing.</p>
+      <p class="tm-refs"> <button type="button" class="cite" data-k="nicolaou2021">Nijs &amp; Nicolaou 2021</button> (joint resilience through music and motion) · <button type="button" class="cite" data-k="verneert2021">Verneert, Nijs &amp; De Baets 2021</button> (collective improvisation and belonging) · <button type="button" class="cite" data-k="nicolaou2023">Nicolaou, Nijs &amp; Van Petegem 2023</button> (movement in the artist-facilitator’s practice in asylum seeker centres) · <button type="button" class="cite" data-k="reynaert2025">Reynaert, De Bisschop &amp; Nijs 2025</button> (embodied strategies in participatory songwriting with asylum seekers) · <button type="button" class="cite" data-k="wellbeing2025">Nijs 2025</button> (well-being and musicianship)
+      </p>
+    </div>
+  </div>
+
+  <div class="tm-up" aria-hidden="true"><span></span><span></span><span></span></div>
+
+  <!-- technology across the domains -->
+  <div class="tm-box tm-tech">
+    <div>
+      <span class="tm-eyebrow">Technology · across the domains</span>
+      <h3>Technology-enhanced learning</h3>
+      <p class="tm-lead">Interactive systems that make the musician–instrument loop visible and playable.</p>
+    </div>
+    <div>
+      <p class="tm-refs"><b>Music Paint Machine:</b> <button type="button" class="cite" data-k="mpm2012a">Nijs et al. 2012a</button> (design for self-monitoring through creative visual output) · <button type="button" class="cite" data-k="mpm2012b">Nijs et al. 2012b</button> (flow and presence) · <button type="button" class="cite" data-k="mpm2014">Nijs &amp; Leman 2014</button> (a longitudinal classroom study) · <button type="button" class="cite" data-k="dalcroze">Nijs 2018</button> (Dalcroze meets technology)
+      </p>
+      <p class="tm-refs"><b>Sensor-based augmented reality:</b> <button type="button" class="cite" data-k="ar2024">Nijs &amp; Behzadaval 2024</button> (foundations for augmented reality in music education) · <button type="button" class="cite" data-k="iomt2024">Nijs &amp; Turchet 2024</button> (the Internet of Musical Things for children) · <button type="button" class="cite" data-k="visual2026">Behzadaval, Serra Marin &amp; Nijs 2026</button> (visual information in music education technology)
+      </p>
+    </div>
+  </div>
+
+  <div class="tm-loop" aria-hidden="true"><span>Findings from practice inform the theory</span></div>
+  <div class="tm-loop-stub" aria-hidden="true"></div>
+</div>
+</div></section>
+<div id="tm-pop" role="tooltip"></div>
+<script id="tm-refs" type="application/json" set:html={refsJson}></script>
+</Base>
+
+<script>
+  import { SHEET_CSV_URL, recordsFromCSV, itemHtml } from '../lib/publications.js';
+  import { matchRefs } from '../data/topic-map.js';
+
+  const map = document.getElementById('tmap');
+  const pop = document.getElementById('tm-pop');
+  let refs = JSON.parse(document.getElementById('tm-refs').textContent);
+
+  // Refresh from the live sheet, so a corrected reference shows without a rebuild.
+  fetch(SHEET_CSV_URL + '&v=' + Math.floor(Date.now() / 60000), { cache: 'no-cache' })
+    .then((res) => (res.ok ? res.text() : Promise.reject()))
+    .then((text) => { const recs = recordsFromCSV(text); if (recs.length) refs = matchRefs(recs); })
+    .catch(() => {});
+
+  // ---- pop-up ----
+  let current = null, hideTimer = 0, pinned = false;
+
+  function show(btn) {
+    clearTimeout(hideTimer);
+    const recs = btn.dataset.k.split(' ').flatMap((k) => refs[k] || []);
+    pop.innerHTML = recs.length ? recs.map(itemHtml).join('')
+      : '<div class="pb-item pb-v">This reference is not in the publication list.</div>';
+    if (current && current !== btn) current.classList.remove('on');
+    current = btn; btn.classList.add('on');
+    pop.classList.add('show');
+    const b = btn.getBoundingClientRect(), p = pop.getBoundingClientRect();
+    const left = Math.max(12, Math.min(b.left, window.innerWidth - p.width - 12));
+    const below = b.bottom + 8;
+    const top = below + p.height > window.innerHeight - 12 ? b.top - p.height - 8 : below;
+    pop.style.left = left + 'px';
+    pop.style.top = Math.max(12, top) + 'px';
+  }
+  function hide() {
+    pop.classList.remove('show'); pinned = false;
+    if (current) current.classList.remove('on');
+    current = null;
+  }
+  const hideSoon = () => { if (!pinned) { clearTimeout(hideTimer); hideTimer = setTimeout(hide, 220); } };
+
+  map.querySelectorAll('.cite').forEach((btn) => {
+    btn.addEventListener('mouseenter', () => { if (!pinned) show(btn); });
+    btn.addEventListener('mouseleave', hideSoon);
+    btn.addEventListener('focus', () => show(btn));
+    btn.addEventListener('blur', (e) => { if (!pop.contains(e.relatedTarget)) hideSoon(); });
+    // Click or tap keeps it open (touch screens have no hover).
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (pinned && current === btn) { hide(); return; }
+      show(btn); pinned = true;
+    });
+  });
+  pop.addEventListener('mouseenter', () => clearTimeout(hideTimer));
+  pop.addEventListener('mouseleave', hideSoon);
+  document.addEventListener('click', (e) => { if (!pop.contains(e.target)) hide(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') hide(); });
+  window.addEventListener('scroll', () => { if (current) show(current); }, { passive: true });
+
+  // ---- dashed arrow from Domain C back to the core ----
+  const loop = map.querySelector('.tm-loop'), stub = map.querySelector('.tm-loop-stub');
+  function placeLoop() {
+    if (window.innerWidth <= 860) return;
+    const m = map.getBoundingClientRect();
+    const core = document.getElementById('tm-core').getBoundingClientRect();
+    const dc = document.getElementById('tm-domain-c').getBoundingClientRect();
+    const x = m.right - 18 - m.left;          // the vertical run, in the right gutter
+    const yTop = core.top + core.height / 2 - m.top;
+    const yBot = dc.top + dc.height / 2 - m.top;
+    Object.assign(loop.style, { display: 'block', left: (core.right - m.left + 4) + 'px', top: yTop + 'px',
+      width: (x - (core.right - m.left + 4)) + 'px', height: (yBot - yTop) + 'px' });
+    Object.assign(stub.style, { display: 'block', left: (dc.right - m.left) + 'px', top: yBot + 'px',
+      width: (x - (dc.right - m.left)) + 'px' });
+  }
+  placeLoop();
+  window.addEventListener('resize', placeLoop);
+  document.fonts && document.fonts.ready.then(placeLoop);
+</script>

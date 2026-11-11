@@ -32,7 +32,7 @@ const PENDING = /^(forthcoming|in preparation|in review|submitted|accepted|invit
 export const esc = (s) => String(s == null ? '' : s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-function itemHtml(r) {
+export function itemHtml(r) {
   const bits = [];
   const stamp = PENDING.test(r.status) ? r.status : (r.year || 'n.d.');
   bits.push('<span class="pb-a">' + esc(r.authors) + '</span> (' + esc(stamp) + '). ');
