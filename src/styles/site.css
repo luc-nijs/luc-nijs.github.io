@@ -166,3 +166,8 @@ button.btn { background: transparent; cursor: pointer; font-family: inherit; }
 .video p { margin-top: 8px; }
 .video-grid:has(.video) + .video-soon { display: none; }
 @media (max-width: 700px) { .video-grid { grid-template-columns: minmax(0, 1fr); } }
+/* IFEN page: block below the two blocks, as wide as both together */
+.ifen-cards .card.ifen-wide { grid-column: 1 / -1; grid-row: auto; display: flex; min-height: 0; }
+.ifen-research { display: block; }
+.ifen-research a { font-weight: 500; }
+.ifen-mail svg { display: inline-block; vertical-align: -6px; margin-left: 4px; }
