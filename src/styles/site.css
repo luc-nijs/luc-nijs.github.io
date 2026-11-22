@@ -135,3 +135,9 @@ main > section:last-of-type .grey-grid:last-child { margin-bottom: 0; }
   .card > .card-center { max-width: 70%; }
   .b:has(> hr) { width: 72px !important; margin-inline: auto !important; }
 }
+
+/* Arrow link at the bottom right of a card, leading to a subpage */
+.card > .card-arrow { align-self: flex-end; margin-top: auto; padding-top: 12px; color: var(--link); line-height: 0; }
+.card > .card-arrow:hover { color: var(--link-hover); }
+/* Cards side by side keep their text on the same line when only one has a logo */
+.heads-even .card > .b:first-child { min-height: 0 !important; }
