@@ -2,3 +2,6 @@ node_modules/
 dist/
 .astro/
 .DS_Store
+
+# IFEN page: readable text and password stay on this Mac only
+private/

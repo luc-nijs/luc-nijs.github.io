@@ -1,0 +1,61 @@
+/* Video carousel on the IFEN video pages, taken over from kimupe.education/videos */
+/* Without JavaScript the videos are a plain grid of links */
+.cf { position: relative; outline: none; }
+.cf-track { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; padding: 0 16px; }
+.cf-item { position: relative; display: block; aspect-ratio: 16 / 9; overflow: hidden; background: #111; color: var(--text); text-decoration: none; }
+.cf-item img { width: 100%; height: 100%; object-fit: cover; }
+.cf-nav { display: none; }
+
+/* The carousel: one large video in the centre, its neighbours angled at the sides */
+.cf.ready { height: clamp(200px, 28vw, 420px); overflow-x: clip; touch-action: pan-y; user-select: none; }
+.cf.ready .cf-track { display: block; position: absolute; inset: 0; padding: 0; perspective: 1500px; mask-image: linear-gradient(90deg, transparent 0, rgba(0, 0, 0, .15) 7%, #000 20%, #000 80%, rgba(0, 0, 0, .15) 93%, transparent 100%); }
+.cf.ready .cf-item { position: absolute; left: 50%; top: 50%; width: 45.6%; backface-visibility: hidden; }
+.cf.live .cf-item { transition: transform .55s cubic-bezier(.2, .7, .2, 1), opacity .4s; }
+.cf.ready .cf-item:not(.active) img { filter: brightness(.55); }
+.cf.ready .cf-item:not(.active) .cf-cap { opacity: 0; }
+.cf.ready .cf-item:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.cf-play { display: none; position: absolute; top: 50%; left: 50%; width: 64px; height: 64px; transform: translate(-50%, -50%); background: rgba(0, 0, 0, .55); border-radius: 50%; transition: background .2s; }
+.cf-play::after { content: ""; position: absolute; top: 50%; left: 54%; transform: translate(-50%, -50%); border-style: solid; border-width: 12px 0 12px 20px; border-color: transparent transparent transparent #fff; }
+.cf-item.active .cf-play { display: block; }
+.cf-item.active:hover .cf-play { background: var(--accent); }
+.cf-cap { position: absolute; inset: auto 0 0; display: flex; flex-direction: column; gap: 3px; padding: 44px 5% 4.5%; background: linear-gradient(transparent, rgba(0, 0, 0, .85)); text-align: left; }
+.cf-cap b { font-size: clamp(14px, 1.55vw, 24px); font-weight: 700; line-height: 1.2; }
+.cf-cap span { font-size: clamp(11px, 1vw, 15px); color: #cfcfcf; }
+.cf-nav { position: absolute; top: 50%; z-index: 200; width: 44px; height: 80px; padding: 12px; background: none; border: 0; color: var(--text); cursor: pointer; transform: translateY(-50%); }
+.cf.ready .cf-nav, .lb .cf-nav { display: block; }
+.cf-nav:hover { color: var(--accent); }
+.cf-nav svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 2; }
+.cf-nav.prev { left: 8px; }
+.cf-nav.next { right: 8px; }
+
+/* The player that opens over the page */
+html:has(.lb[open]) { overflow: hidden; }
+.lb { width: 100vw; max-width: none; height: 100dvh; max-height: none; padding: 16px 64px; background: transparent; border: 0; color: var(--text); }
+.lb[open] { display: flex; align-items: center; justify-content: center; }
+.lb::backdrop { background: rgba(0, 0, 0, .88); }
+.lb-box { width: min(1060px, 100%); background: #000; border: 1px solid #2a2a2a; }
+.lb-frame { aspect-ratio: 16 / 9; background: #000; }
+.lb-frame iframe { width: 100%; height: 100%; border: 0; }
+.lb-info { display: flex; flex-direction: column; gap: 4px; padding: 16px 20px 20px; }
+.lb-info b { font-size: clamp(16px, 2vw, 22px); font-weight: 700; line-height: 1.25; }
+.lb-info span { color: #cfcfcf; font-size: 14px; }
+.lb-x { position: absolute; top: 10px; right: 14px; width: 44px; height: 44px; background: none; border: 0; color: var(--text); font-size: 32px; font-weight: 300; cursor: pointer; }
+.lb-x:hover { color: var(--accent); }
+
+@media (prefers-reduced-motion: reduce) { .cf.live .cf-item { transition: none; } }
+@media (max-width: 760px) {
+  .cf.ready { height: 46vw; }
+  .cf.ready .cf-item { width: 74%; }
+  .cf.ready .cf-track { mask-image: none; }
+  .cf-play { width: 48px; height: 48px; }
+  .cf-play::after { border-width: 9px 0 9px 15px; }
+  .cf-nav { width: 32px; height: 60px; padding: 8px; }
+  .cf-nav.prev { left: 0; }
+  .cf-nav.next { right: 0; }
+  .lb { padding: 56px 0 16px; }
+  .lb .cf-nav { top: 28px; transform: none; height: 44px; width: 28px; }
+  .lb .cf-nav.prev { left: 10px; }
+  .lb .cf-nav.next { left: 46px; right: auto; }
+}
+/* On the IFEN page the carousel spans the content width */
+#ifen-content .cf-page { max-width: 1100px; margin: 0 auto; }

@@ -1,6 +1,6 @@
 // Lists every page for search engines. New pages in src/pages are added automatically.
-// Left out: the error page.
-const excluded = new Set(['404']);
+// Left out: the error page and the password-protected IFEN pages.
+const excluded = new Set(['404', 'ifen', 'ifen-embodied-videos', 'ifen-technology-videos']);
 
 export function GET({ site }) {
   const slugs = Object.keys(import.meta.glob('./*.astro'))

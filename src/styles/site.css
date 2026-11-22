@@ -141,3 +141,28 @@ main > section:last-of-type .grey-grid:last-child { margin-bottom: 0; }
 .card > .card-arrow:hover { color: var(--link-hover); }
 /* Cards side by side keep their text on the same line when only one has a logo */
 .heads-even .card > .b:first-child { min-height: 0 !important; }
+/* Password box on the IFEN page */
+.lock-row { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+.lock-row input { flex: 1 1 200px; padding: 8px 10px; font: inherit; color: var(--text); background: var(--panel); border: 1px solid var(--soft); border-radius: 4px; }
+.lock-msg { margin-top: 10px; color: var(--accent); min-height: 1.4em; }
+button.btn { background: transparent; cursor: pointer; font-family: inherit; }
+/* PDF icons on the IFEN page */
+.pdf-line { display: flex; align-items: center; gap: 8px; }
+.pdf-line a { line-height: 0; }
+.pdf-icon { display: block; }
+.pdf-soon { line-height: 0; color: var(--soft); opacity: .6; }
+.pdf-status { color: var(--soft); font-size: 13px; }
+/* IFEN blocks: each section (title, slides, links, references, videos) is a row shared by both
+   blocks, so every section starts at the same height in both. */
+.ifen-cards { grid-template-rows: repeat(5, auto); }
+.ifen-cards .card { display: grid; grid-row: span 5; grid-template-rows: subgrid; row-gap: 0; min-height: 0; }
+.ifen-cards .ifen-sec { margin: 0; }
+.ifen-cards .ifen-sec:first-child { padding: 5px 0 12px; }
+.ifen-cards .ifen-sec.gap { padding-top: 21px; }
+.ifen-arrow { line-height: 0; }
+/* IFEN video pages */
+.video-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; max-width: 900px; margin: 0 auto; }
+.video iframe { width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 4px; display: block; }
+.video p { margin-top: 8px; }
+.video-grid:has(.video) + .video-soon { display: none; }
+@media (max-width: 700px) { .video-grid { grid-template-columns: minmax(0, 1fr); } }

@@ -1,0 +1,161 @@
+---
+// Password-protected IFEN page. The content is encrypted (src/data/<slug>.enc.json, made from
+// private/<slug>.html) and only readable after the visitor types the password, which is the same
+// for all IFEN pages. To change text or password, see private/README.txt.
+import Base from '../layouts/Base.astro';
+import '../styles/videos.css';
+interface Props { slug: string; heading: string; title: string; enc: object; back: { href: string; label: string } }
+const { slug, heading, title, enc, back } = Astro.props;
+---
+<Base title={title} description={"Teaching material for the IFEN Formation de début de carrière (password protected)."} slug={slug} noindex>
+<section style="padding:46px 16px 50px"><div class="inner" style="max-width:980px">
+<div class="b" style="margin-left:20.82%;width:58.27%"><div class="rt"><h1 class="fs-28 c-27223e ta-center">{heading}</h1></div></div>
+<div class="b" style="margin-left:44.08%;width:11.84%;margin-top:9px"><hr></div>
+<div class="b" style="margin-left:20.82%;width:58.27%;margin-top:27px"><div class="rt">
+<form id="ifen-lock" class="lock">
+<p class="fs-14 c-27223e">This page is for participants of the IFEN training. Please enter the password.</p>
+<div class="lock-row">
+<input id="ifen-pw" type="password" autocomplete="current-password" aria-label="Password" required>
+<button type="submit" class="btn">Open</button>
+</div>
+<p id="ifen-msg" class="fs-14 lock-msg" role="alert"></p>
+</form>
+</div></div>
+<div id="ifen-content" style="margin-top:36px" hidden></div>
+<div class="b" style="margin-left:20.82%;width:58.27%;margin-top:24px"><div class="rt"><p class="fs-14 c-27223e"><a href={back.href}>{back.label}</a></p></div></div>
+</div></section>
+<script is:inline type="application/json" id="ifen-enc" set:html={JSON.stringify(enc)}></script>
+<script is:inline>
+(() => {
+  const enc = JSON.parse(document.getElementById('ifen-enc').textContent);
+  const form = document.getElementById('ifen-lock');
+  const input = document.getElementById('ifen-pw');
+  const msg = document.getElementById('ifen-msg');
+  const box = document.getElementById('ifen-content');
+  const bytes = (b64) => Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
+
+  let key = null;
+  async function open(password) {
+    const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveKey']);
+    const k = await crypto.subtle.deriveKey({ name: 'PBKDF2', hash: 'SHA-256', salt: bytes(enc.salt), iterations: enc.iterations }, base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+    const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: bytes(enc.iv) }, k, bytes(enc.data));
+    key = k;
+    box.innerHTML = new TextDecoder().decode(plain);
+    box.hidden = false;
+    form.hidden = true;
+    if (box.querySelector('[data-cf]')) initCarousel(box);
+  }
+
+
+  // Video carousel (same as kimupe.education/videos): one large video in the centre,
+  // its neighbours angled at the sides; clicking the centre one opens the player.
+  function initCarousel(root) {
+    const cf = root.querySelector('[data-cf]');
+    const lb = root.querySelector('[data-lb]');
+    const frame = lb.querySelector('[data-frame]');
+    const items = [...cf.querySelectorAll('.cf-item')];
+    const count = items.length;
+    let current = 0;
+    const offsetOf = (i) => { let d = (i - current + count) % count; if (d > count / 2) d -= count; return d; };
+    function layout() {
+      items.forEach((item, i) => {
+        const d = offsetOf(i), side = Math.sign(d), far = Math.abs(d) > 1;
+        const move = d === 0 ? '0%, 0, 0' : far ? `${side * 168}%, 0, -1000px` : `${side * 105}%, 0, -600px`;
+        item.style.transform = `translate(-50%, -50%) translate3d(${move}) rotateY(${-side * 22}deg)`;
+        item.style.opacity = far ? '0' : '1';
+        item.style.zIndex = String(100 - Math.abs(d) * 10);
+        item.style.pointerEvents = far ? 'none' : '';
+        item.classList.toggle('active', d === 0);
+        item.tabIndex = d === 0 ? 0 : -1;
+        item.setAttribute('aria-hidden', String(d !== 0));
+      });
+    }
+    function go(index) { current = (index + count) % count; layout(); }
+    const embedUrl = ({ kind, id, start }) => kind === 'youtube'
+      ? `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&playsinline=1${start ? '&start=' + start : ''}`
+      : `https://player.vimeo.com/video/${id}?autoplay=1${start ? '#t=' + start + 's' : ''}`;
+    function loadPlayer() {
+      const data = items[current].dataset;
+      const player = document.createElement('iframe');
+      player.src = embedUrl(data);
+      player.title = data.title || '';
+      player.allow = 'autoplay; fullscreen; picture-in-picture; encrypted-media';
+      frame.replaceChildren(player);
+      lb.querySelector('[data-title]').textContent = data.title || '';
+      lb.querySelector('[data-by]').textContent = data.by || '';
+    }
+    function step(by) { go(current + by); if (lb.open) loadPlayer(); }
+    let startX = null, dragged = false;
+    cf.addEventListener('pointerdown', (e) => { startX = e.clientX; dragged = false; });
+    cf.addEventListener('pointerup', (e) => {
+      if (startX === null) return;
+      const moved = e.clientX - startX; startX = null;
+      if (Math.abs(moved) > 40) { dragged = true; step(moved < 0 ? 1 : -1); }
+    });
+    items.forEach((item, i) => item.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (dragged) { dragged = false; return; }
+      if (i === current) { loadPlayer(); lb.showModal(); } else go(i);
+    }));
+    root.querySelectorAll('[data-prev]').forEach((b) => b.addEventListener('click', () => step(-1)));
+    root.querySelectorAll('[data-next]').forEach((b) => b.addEventListener('click', () => step(1)));
+    cf.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+      e.preventDefault(); step(e.key === 'ArrowLeft' ? -1 : 1); items[current].focus();
+    });
+    lb.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') step(-1); if (e.key === 'ArrowRight') step(1); });
+    lb.addEventListener('close', () => { frame.replaceChildren(); items[current].focus(); });
+    lb.querySelector('[data-close]').addEventListener('click', () => lb.close());
+    lb.addEventListener('click', (e) => { if (e.target === lb) lb.close(); });
+    cf.classList.add('ready');
+    layout();
+    requestAnimationFrame(() => requestAnimationFrame(() => cf.classList.add('live')));
+  }
+
+  // Encrypted PDFs: fetched, decrypted with the same key and opened in a new tab.
+  const cache = {};
+  box.addEventListener('click', async (ev) => {
+    const link = ev.target.closest('[data-enc-file]');
+    if (!link || !key) return;
+    ev.preventDefault();
+    const name = link.dataset.encFile;
+    const status = link.parentElement.querySelector('.pdf-status');
+    const win = window.open('', '_blank');
+    if (win) win.document.write('<p style="font-family:sans-serif">Loading…</p>');
+    try {
+      if (!cache[name]) {
+        if (status) status.textContent = 'Loading…';
+        const res = await fetch('/ifen-files/' + name + '.enc');
+        if (!res.ok) throw new Error(res.status);
+        const all = new Uint8Array(await res.arrayBuffer());
+        const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: all.slice(0, 12) }, key, all.slice(12));
+        cache[name] = URL.createObjectURL(new Blob([plain], { type: 'application/pdf' }));
+      }
+      if (win) win.location.href = cache[name]; else location.href = cache[name];
+      if (status) status.textContent = '';
+    } catch (e) {
+      if (win) win.close();
+      if (status) status.textContent = 'Could not open the file, please try again.';
+    }
+  });
+
+  // Stay unlocked while the browser tab stays open.
+  let saved = null;
+  try { saved = sessionStorage.getItem('ifen-pw'); } catch (e) {}
+  if (saved) open(saved).catch(() => { try { sessionStorage.removeItem('ifen-pw'); } catch (e) {} });
+
+  form.addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    msg.textContent = 'Checking…';
+    try {
+      await open(input.value);
+      try { sessionStorage.setItem('ifen-pw', input.value); } catch (e) {}
+      msg.textContent = '';
+    } catch (e) {
+      msg.textContent = 'Wrong password, please try again.';
+      input.select();
+    }
+  });
+})();
+</script>
+</Base>
