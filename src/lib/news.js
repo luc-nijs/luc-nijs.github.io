@@ -12,7 +12,8 @@ export function driveId(link) {
   return m ? m[1] : '';
 }
 
-export const driveImageUrl = (id) => `https://drive.google.com/thumbnail?id=${id}&sz=w480`;
+// Large enough to stay sharp when a visitor clicks a picture to enlarge it.
+export const driveImageUrl = (id) => `https://drive.google.com/thumbnail?id=${id}&sz=w1600`;
 
 const webAddress = (s) => (/^https?:\/\//i.test(s) ? s : /^[a-z][a-z0-9+.-]*:/i.test(s) ? '' : 'https://' + s);
 

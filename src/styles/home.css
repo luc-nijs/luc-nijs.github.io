@@ -17,7 +17,13 @@
 .home .news p { margin: 0; font-size: 16px; line-height: 1.5; color: var(--copy); }
 .home .news-item + .news-item { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--line); }
 /* Every picture gets the same height and stays whole. The panel is narrow, so it sits under the text. */
-.home .news-picture { width: auto; height: 100px; max-width: 100%; margin-top: 12px; object-fit: contain; }
+.home .news-picture { width: auto; height: 100px; max-width: 100%; margin-top: 12px; object-fit: contain; cursor: zoom-in; }
+/* A clicked news picture opens large; a click anywhere or Esc closes it. */
+.picture-view { max-width: none; max-height: none; width: 100vw; height: 100vh; margin: 0; padding: 24px; border: 0;
+  background: rgba(0, 0, 0, .88); box-sizing: border-box; cursor: zoom-out; }
+.picture-view[open] { display: flex; align-items: center; justify-content: center; }
+.picture-view::backdrop { background: transparent; }
+.picture-view img { max-width: 100%; max-height: 100%; object-fit: contain; box-shadow: 0 8px 40px rgba(0, 0, 0, .6); }
 .home .panels:has(.news[hidden]) { grid-template-columns: 1fr; }
 .home ol.talks { margin: 0; padding: 0; list-style: none; }
 .home .talks li { display: grid; grid-template-columns: 112px 1fr; gap: 20px; padding: 12px 0; border-top: 1px solid var(--line); color: var(--text); font-size: 15.5px; line-height: 1.4; }
