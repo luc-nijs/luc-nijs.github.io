@@ -29,13 +29,21 @@ const seal = async (bytes) => {
 };
 const b64 = (bytes) => Buffer.from(bytes).toString('base64');
 
-// Page content: every private/<slug>.html
+// Page content: every private/<slug>.html. A page is only encrypted again when its text or the
+// password changed, so unchanged pages do not show up as changed in git.
+const hashFile = at('private/ifen-page-hashes.json');
+const hashes = sameKey && existsSync(hashFile) ? JSON.parse(readFileSync(hashFile, 'utf8')) : {};
 for (const file of readdirSync(at('private')).filter((f) => f.endsWith('.html'))) {
   const slug = file.slice(0, -5);
-  const page = await seal(new TextEncoder().encode(readFileSync(at(`private/${file}`), 'utf8')));
+  const text = readFileSync(at(`private/${file}`), 'utf8');
+  const hash = createHash('sha256').update(text).digest('hex');
+  if (hashes[slug] === hash && existsSync(at(`src/data/${slug}.enc.json`))) { console.log(`Unchanged src/data/${slug}.enc.json`); continue; }
+  const page = await seal(new TextEncoder().encode(text));
   writeFileSync(at(`src/data/${slug}.enc.json`), JSON.stringify({ iterations, salt: b64(salt), iv: b64(page.iv), data: b64(page.data) }, null, 2) + '\n');
+  hashes[slug] = hash;
   console.log(`Wrote src/data/${slug}.enc.json`);
 }
+writeFileSync(hashFile, JSON.stringify(hashes, null, 2) + '\n');
 
 // Files: 12-byte IV followed by the ciphertext. A file is only encrypted again when it is new,
 // has changed since, or the password changed; files no longer in private/files are removed.
